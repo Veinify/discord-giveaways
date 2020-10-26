@@ -171,7 +171,7 @@ class GiveawaysManager extends EventEmitter {
                 .setDescription(
                     `${options.messages.inviteToParticipate}\n${giveaway.content}\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }`
+                    } ${options.rolereq ? `📣 Must have role called <@&${options.roleid}>` : ''}`
                 )
                 .setTimestamp(new Date(giveaway.endAt).toISOString());
             let message = await channel.send(options.messages.giveaway, { embed });
