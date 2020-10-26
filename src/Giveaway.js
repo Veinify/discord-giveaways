@@ -259,7 +259,7 @@ class Giveaway extends EventEmitter {
             exemptMembers: this.options.exemptMembers,
             reaction: this.options.reaction,
             rolereq: this.options.rolereq,
-            roleid: this.option.roleid
+            roleid: this.options.roleid
         };
         return baseData;
     }
