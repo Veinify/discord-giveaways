@@ -88,6 +88,15 @@ class Giveaway extends EventEmitter {
          * @type {Discord.Message?}
          */
         this.message = null;
+        /**
+         * Role requirement
+         * @type {booelan}
+         */
+        this.rolereq = options.rolereq;
+        /**
+         * @type {snowflake}
+         */
+         this.roleid = options.roleid;
     }
 
     /**
@@ -248,7 +257,9 @@ class Giveaway extends EventEmitter {
             botsCanWin: this.options.botsCanWin,
             exemptPermissions: this.options.exemptPermissions,
             exemptMembers: this.options.exemptMembers,
-            reaction: this.options.reaction
+            reaction: this.options.reaction,
+            rolereq: this.options.rolereq,
+            roleid: this.option.roleid
         };
         return baseData;
     }

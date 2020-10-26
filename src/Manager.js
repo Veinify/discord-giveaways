@@ -144,6 +144,9 @@ class GiveawaysManager extends EventEmitter {
             if (!options.winnerCount || isNaN(options.winnerCount)) {
                 return reject(`options.winnerCount is not a number. (val=${options.winnerCount})`);
             }
+            if (!options.rolereq === true || !options.rolereq === false) {
+                return reject(`options.rolereq must be a booelan (true/false). (val=${options.rolereq})`)
+            }
             let giveaway = new Giveaway(this, {
                 startAt: Date.now(),
                 endAt: Date.now() + options.time,
@@ -159,7 +162,9 @@ class GiveawaysManager extends EventEmitter {
                 exemptPermissions: options.exemptPermissions,
                 exemptMembers: options.exemptMembers,
                 embedColor: options.embedColor,
-                embedColorEnd: options.embedColorEnd
+                embedColorEnd: options.embedColorEnd,
+                rolereq: options.rolereq,
+                roleid: options.roleid
             });
             let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
             embed
