@@ -144,9 +144,6 @@ class GiveawaysManager extends EventEmitter {
             if (!options.winnerCount || isNaN(options.winnerCount)) {
                 return reject(`options.winnerCount is not a number. (val=${options.winnerCount})`);
             }
-            if (options.rolereq !== null && !options.rolereq === true || !options.rolereq === false) {
-                return reject(`options.rolereq must be a booelan (true/false). (val=${options.rolereq})`)
-            }
             let giveaway = new Giveaway(this, {
                 startAt: Date.now(),
                 endAt: Date.now() + options.time,
