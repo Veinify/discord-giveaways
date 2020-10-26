@@ -171,7 +171,7 @@ class GiveawaysManager extends EventEmitter {
                 .setDescription(
                     `${options.messages.inviteToParticipate}\n${giveaway.content}\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    } \n\n${options.rolereq ? `📣 Must have role called <@&${options.roleid}>` : ''}`
+                    } \n\n${giveaway.rolereq === true ? `📣 Must have role called <@&${giveaway.roleid}>` : ''}`
                 )
                 .setTimestamp(new Date(giveaway.endAt).toISOString());
             let message = await channel.send(options.messages.giveaway, { embed });
@@ -374,7 +374,7 @@ class GiveawaysManager extends EventEmitter {
                 .setDescription(
                     `${giveaway.messages.inviteToParticipate}\n${giveaway.content}\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    } \n\n${options.rolereq ? `📣 Must have role called <@&${options.roleid}>` : ''}`
+                    } \n\n${giveaway.rolereq === true ? `📣 Must have role called <@&${giveaway.roleid}>` : ''}`
                 )
                 .setTimestamp(new Date(giveaway.endAt).toISOString());
             giveaway.message.edit(giveaway.messages.giveaway, { embed });
