@@ -292,15 +292,29 @@ class Giveaway extends EventEmitter {
      * @returns {Promise<Discord.GuildMember[]>} The winner(s)
      */
     async ValidEntry() {
-        if (!this.message) return [];
-        const reactions = this.message.reactions.cache
+        if(!this.message) return [];
+        // Pick the winner
+        const reactions = (this.manager.v12 ? this.message.reactions.cache :  this.message.reactions);
         const reaction = reactions.get(this.reaction) || reactions.find(r => r.emoji.name === this.reaction);
-        if (!reaction) return new Discord.Collection().array()
-        let entries = reaction.users.fetch()
-        .filter(u => u.bot === this.botsCanWin)
-        .size;
-        if (!entries) return 0;
-        return entries;
+        if (!reaction) return new Discord.Collection().array();
+        const guild = this.manager.v12 ? await this.channel.guild.fetch() : await this.channel.guild.fetchMembers();
+        let users = (this.manager.v12 ? await reaction.users.fetch() : await reaction.fetchUsers())
+            .filter(u => u.bot === this.botsCanWin)
+            .filter(u => u.id !== this.message.client.user.id)
+            .filter(u => guild.member(u.id));
+        
+        for(let u of users.array()){
+            const exemptMember = await this.exemptMembers(guild.member(u.id));
+            if(exemptMember){
+                users.delete(u.id);
+            }
+        }
+
+        users = users.filter(u => !this.exemptPermissions.some(p => guild.member(u.id).hasPermission(p)))
+            .filter(u => u)
+            .map(u => guild.member(u))
+            .size;
+        return users;
     }
     async roll(winnerCount) {
         if(!this.message) return [];
