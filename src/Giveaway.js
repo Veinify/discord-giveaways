@@ -7,7 +7,7 @@ const {
     GiveawayRerollOptions
 } = require('./Constants.js');
 const GiveawaysManager = require('./Manager.js');
-
+let users;
 /**
  * Represents a Giveaway
  */
@@ -299,7 +299,7 @@ class Giveaway extends EventEmitter {
         const reaction = reactions.get(this.reaction) || reactions.find(r => r.emoji.name === this.reaction);
         if (!reaction) return new Discord.Collection().array();
         const guild = this.manager.v12 ? await this.channel.guild.fetch() : await this.channel.guild.fetchMembers();
-        let users = (this.manager.v12 ? await reaction.users.fetch() : await reaction.fetchUsers())
+        users = (this.manager.v12 ? await reaction.users.fetch() : await reaction.fetchUsers())
             .filter(u => u.bot === this.botsCanWin)
             .filter(u => u.id !== this.message.client.user.id)
             .filter(u => guild.member(u.id));
@@ -378,9 +378,9 @@ class Giveaway extends EventEmitter {
                 embed
                     .setColor(this.embedColorEnd)
                     .setFooter(this.messages.endedAt)
-                    .setDescription(`🎁 • ${this.prize}\n🏅 • ${this.messages.winners}: ${this.winnerCount}\n${
+                    .setDescription(`🎁 • ${this.prize}\n🏅 • ${this.messages.winners}: ${this.winnerCount}\n🏆 • ${
                         this.hostedBy ? this.messages.hostedBy.replace('{user}', this.hostedBy) : ''
-                    }\n${this.options.messages.inviteToParticipate}\n\n${str}\n\n${this.rolereq === true ? `📣 Must have the <@&${this.roleid}> role to enter.` : ''}`)
+                    }\n🎊 • Valid Entries: ${users.size || 0}\n${str}\n\n${this.rolereq === true ? `📣 Must have the <@&${this.roleid}> role to enter.` : ''}`)
                     .setTimestamp(new Date(this.endAt).toISOString());
                 this.message.edit(this.messages.giveawayEnded, { embed });
                 this.message.channel.send(
@@ -395,9 +395,9 @@ class Giveaway extends EventEmitter {
                 embed
                     .setColor(this.embedColorEnd)
                     .setFooter(this.messages.endedAt)
-                    .setDescription(`🎁 • ${this.prize}\n🏅 • ${this.messages.winners}: ${this.winnerCount}\n${
+                    .setDescription(`🎁 • ${this.prize}\n🏅 • ${this.messages.winners}: ${this.winnerCount}\n🏆 • ${
                         this.hostedBy ? this.messages.hostedBy.replace('{user}', this.hostedBy) : ''
-                    }\n${this.options.messages.inviteToParticipate}\n\n${this.messages.noWinner}\n\n${this.rolereq === true ? `📣 Must have the <@&${this.roleid}> role to enter.` : ''}`)
+                    }\n🎊 • Valid Entries: ${users.size || 0}\n${this.messages.noWinner}\n\n${this.rolereq === true ? `📣 Must have the <@&${this.roleid}> role to enter.` : ''}`)
                     .setTimestamp(new Date(this.endAt).toISOString());
                     this.message.edit(this.messages.giveawayEnded, { embed });
                 resolve();
