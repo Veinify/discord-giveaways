@@ -296,10 +296,7 @@ class Giveaway extends EventEmitter {
         const reaction = reactions.get(this.reaction) || reactions.find(r => r.emoji.name === this.reaction);
         if (!reaction) return new Discord.Collection().array();
        const guild = this.manager.v12 ? await this.channel.guild.fetch() : await this.channel.guild.fetchMembers();
-        let entries = (this.manager.v12 ? await reaction.users.fetch().size : await reaction.fetchUsers())
-            .filter(u => u.bot === this.botsCanWin)
-            .filter(u => u.id !== this.message.client.user.id)
-            .filter(u => guild.member(u.id)).size;
+        let entries = await reaction.users.count
         if (!entries) return 0;
         return entries;
     }
