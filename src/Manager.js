@@ -5,6 +5,7 @@ const { promisify } = require('util');
 const writeFileAsync = promisify(writeFile);
 const existsAsync = promisify(exists);
 const readFileAsync = promisify(readFile);
+const ms = require("ms");
 const Discord = require('discord.js');
 const {
     defaultGiveawayMessages,
