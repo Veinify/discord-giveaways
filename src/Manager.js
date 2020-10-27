@@ -370,7 +370,7 @@ class GiveawaysManager extends EventEmitter {
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${giveaway.startAt}&ends=${giveaway.endAt}`
             let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
             embed
-                 .setColor(giveaway.embedColor)
+                 this.options.default.lastChance.enabled ? '' : embed.setColor(giveaway.embedColor) 
                  .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
@@ -378,7 +378,7 @@ class GiveawaysManager extends EventEmitter {
                 )
                 .setFooter('Aestetik Moderation')
                 .setTimestamp(new Date(giveaway.endAt).toISOString())
-            giveaway.message.edit(giveaway.messages.giveaway, { embed });
+            giveaway.message.edit(this.options.default.lastChance.enabled ? '' : giveaway.messages.giveaway, { embed });
             if (giveaway.remainingTime < this.options.updateCountdownEvery) {
                 setTimeout(() => this.end.call(this, giveaway.messageID), giveaway.remainingTime);
             if (this.options.default.lastChance.enabled) {
