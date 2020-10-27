@@ -291,15 +291,13 @@ class Giveaway extends EventEmitter {
      * @param {number} [winnerCount=this.winnerCount] The number of winners to pick
      * @returns {Promise<Discord.GuildMember[]>} The winner(s)
      */
-    async ValidEntry () {
-        const reactions = (this.manager.v12 ? this.message.reactions.cache :  this.message.reactions);
-        const reaction = reactions.get(this.reaction) || reactions.find(r => r.emoji.name === this.reaction);
-        if (!reaction) return new Discord.Collection().array();
-       const guild = this.manager.v12 ? await this.channel.guild.fetch() : await this.channel.guild.fetchMembers();
-        let entries = await reaction.users.count
+    ValidEntry () {
+        const message = (this.message.fetch()).then(msg => {
+        const reaction = message.reactions.get(this.reaction) || message.reactions.find(r => r.emoji.name === this.reaction) || message.reactions.filter(r => r.emoji.name === this.reaction);
+        let entries = reaction.first().count
         if (!entries) return 0;
-        console.log(reaction)
         return entries;
+        })
     }
     async roll(winnerCount) {
         if(!this.message) return [];
