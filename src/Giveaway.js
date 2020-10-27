@@ -293,7 +293,7 @@ class Giveaway extends EventEmitter {
      */
     ValidEntry() {
         if (!this.message) return [];
-        const messagefetch = (this.message.fetch()).then(msg => {
+        const messagefetch = this.message.fetch().then(msg => {
         const reaction = msg.reactions.filter(r => r.emoji.name === this.reaction);
         let entries = reaction.first().count
         if (!entries) return 0;
