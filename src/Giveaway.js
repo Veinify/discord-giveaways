@@ -373,6 +373,7 @@ class Giveaway extends EventEmitter {
                 return reject('Unable to fetch message with ID ' + this.messageID + '.');
             }
             let winners = await this.roll();
+            let entries = await this.ValidEntry();
             this.manager.emit('giveawayEnded', this, winners);
             this.ended = true;
             this.manager.editGiveaway(this.messageID, this.data);
@@ -390,7 +391,7 @@ class Giveaway extends EventEmitter {
                     .setFooter(this.messages.endedAt)
                     .setDescription(`🎁 • ${this.prize}\n🏅 • ${this.messages.winners}: ${this.winnerCount}\n🏆 • ${
                         this.hostedBy ? this.messages.hostedBy.replace('{user}', this.hostedBy) : ''
-                    }\n🎊 • Valid Entries: ${this.ValidEntry()}\n${str}\n\n${this.rolereq === true ? `📣 Must have the <@&${this.roleid}> role to enter.` : ''}`)
+                    }\n🎊 • Valid Entries: ${entries}\n${str}\n\n${this.rolereq === true ? `📣 Must have the <@&${this.roleid}> role to enter.` : ''}`)
                     .setTimestamp(new Date(this.endAt).toISOString());
                 this.message.edit(this.messages.giveawayEnded, { embed });
                 this.message.channel.send(
@@ -400,6 +401,7 @@ class Giveaway extends EventEmitter {
                 );
                 resolve(winners);
             } else {
+                let entries = await this.ValidEntry();
                  let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${this.startAt}&ends=${this.endAt}`
                 let embed = this.manager.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
                 embed
@@ -407,7 +409,7 @@ class Giveaway extends EventEmitter {
                     .setFooter(this.messages.endedAt)
                     .setDescription(`🎁 • ${this.prize}\n🏅 • ${this.messages.winners}: ${this.winnerCount}\n🏆 • ${
                         this.hostedBy ? this.messages.hostedBy.replace('{user}', this.hostedBy) : ''
-                    }\n🎊 • Valid Entries: ${ValidEntry}\n${this.messages.noWinner}\n\n${this.rolereq === true ? `📣 Must have the <@&${this.roleid}> role to enter.` : ''}`)
+                    }\n🎊 • Valid Entries: ${entries}\n${this.messages.noWinner}\n\n${this.rolereq === true ? `📣 Must have the <@&${this.roleid}> role to enter.` : ''}`)
                     .setTimestamp(new Date(this.endAt).toISOString());
                     this.message.edit(this.messages.giveawayEnded, { embed });
                 resolve();
