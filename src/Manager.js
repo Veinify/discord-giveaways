@@ -378,7 +378,11 @@ class GiveawaysManager extends EventEmitter {
                 )
                 .setFooter('Aestetik Moderation')
                 .setTimestamp(new Date(giveaway.endAt).toISOString())
+<<<<<<< HEAD
             giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.message : giveaway.messages.giveaway), { embed });
+=======
+            giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.updateCountdownEvery ? this.options.default.lastChance.message : giveaway.messages.giveaway), { embed });
+>>>>>>> 2ac74aae79fdf74ed7646049f15ed6a292fa8bc7
             if (giveaway.remainingTime < this.options.updateCountdownEvery) {
                 setTimeout(() => this.end.call(this, giveaway.messageID), giveaway.remainingTime);
             }
