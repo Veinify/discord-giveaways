@@ -100,7 +100,7 @@ exports.defaultManagerOptions = {
         enabled: false,
         title: "🎉🎉 **LAST CHANCE TO ENTER!** 🎉🎉",
         secondsBeforeLastChance : 5000,
-        embedColor: '#FBEF01'
+        lastEmbedColor: '#FBEF01'
       }
     }
 };

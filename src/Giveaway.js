@@ -387,7 +387,7 @@ class Giveaway extends EventEmitter {
                     this.messages.winners.substr(1, this.messages.winners.length) +
                     ': ' +
                     formattedWinners;
-                 let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${this.startAt}&ends=${this.endAt}`
+                 let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${this.startAt}&ended=${this.endAt}`
                 let embed = this.manager.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
                 embed
                     .setColor(this.embedColorEnd)
@@ -405,7 +405,7 @@ class Giveaway extends EventEmitter {
                 resolve(winners);
             } else {
                 let entries = await this.ValidEntry();
-                 let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${this.startAt}&ends=${this.endAt}`
+                 let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${this.startAt}&ended=${this.endAt}`
                 let embed = this.manager.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
                 embed
                     .setColor(this.embedColorEnd)

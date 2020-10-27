@@ -164,7 +164,7 @@ class GiveawaysManager extends EventEmitter {
                 rolereq: options.rolereq,
                 roleid: options.roleid
             });
-            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${giveaway.startAt}&ends=${giveaway.endAt}`
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
             let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
             embed
                 .setColor(giveaway.embedColor)
@@ -367,9 +367,9 @@ class GiveawaysManager extends EventEmitter {
                 await this.editGiveaway(giveaway.messageID, giveaway.data);
                 return;
             }
-            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${giveaway.startAt}&ends=${giveaway.endAt}`
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
             let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
-            (this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.updateCountdownEvery ? '' : embed.setColor(giveaway.embedColor))
+            (this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? embed.setcolor(this.options.default.lastEmbedColor) : embed.setColor(giveaway.embedColor))
             embed
                  .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
@@ -378,15 +378,9 @@ class GiveawaysManager extends EventEmitter {
                 )
                 .setFooter('Aestetik Moderation')
                 .setTimestamp(new Date(giveaway.endAt).toISOString())
-            giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.updateCountdownEvery ? '' : giveaway.messages.giveaway), { embed });
+            giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.message : giveaway.messages.giveaway), { embed });
             if (giveaway.remainingTime < this.options.updateCountdownEvery) {
                 setTimeout(() => this.end.call(this, giveaway.messageID), giveaway.remainingTime);
-            if (this.options.default.lastChance.enabled) {
-                if (giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance) {
-                  embed.setColor(this.options.default.lastChance.embedColor)
-                    giveaway.message.edit(this.options.default.lastChance.message, { embed });
-                }
-            }
             }
         });
     }
