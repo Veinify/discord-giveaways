@@ -301,18 +301,7 @@ class Giveaway extends EventEmitter {
         let users = (this.manager.v12 ? await reaction.users.fetch() : await reaction.fetchUsers())
             .filter(u => u.bot === this.botsCanWin)
             .filter(u => u.id !== this.message.client.user.id)
-            .filter(u => guild.member(u.id));
-        
-        for(let u of users.array()){
-            const exemptMember = await this.exemptMembers(guild.member(u.id));
-            if(exemptMember){
-                users.delete(u.id);
-            }
-        }
-
-        users = users.filter(u => !this.exemptPermissions.some(p => guild.member(u.id).hasPermission(p)))
-            .filter(u => u)
-            .map(u => guild.member(u))
+            .filter(u => guild.member(u.id))
             .size;
         return users;
     }
