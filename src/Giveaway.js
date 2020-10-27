@@ -298,6 +298,7 @@ class Giveaway extends EventEmitter {
        const guild = this.manager.v12 ? await this.channel.guild.fetch() : await this.channel.guild.fetchMembers();
         let entries = await reaction.users.count
         if (!entries) return 0;
+        console.log(reaction)
         return entries;
     }
     async roll(winnerCount) {
