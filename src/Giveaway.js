@@ -392,9 +392,9 @@ class Giveaway extends EventEmitter {
                 embed
                     .setColor(this.embedColorEnd)
                     .setFooter(this.messages.endedAt)
-                    .setDescription(`🎁 • ${this.prize}\n🏅 • ${this.messages.winners}: ${this.winnerCount}\n🏆 • ${
+                    .setDescription(`🎁 • ${this.prize}\n🏅 • ${str}: ${this.winnerCount}\n🏆 • ${
                         this.hostedBy ? this.messages.hostedBy.replace('{user}', this.hostedBy) : ''
-                    }\n🎊 • Valid Entries: ${entries}\n${str}\n\n${this.rolereq === true ? `📣 Must have the <@&${this.roleid}> role to enter.` : ''}`)
+                    }\n🎊 • Valid Entries: ${entries}`)
                     .setTimestamp(new Date(this.endAt).toISOString());
                 this.message.edit(this.messages.giveawayEnded, { embed });
                 this.message.channel.send(
