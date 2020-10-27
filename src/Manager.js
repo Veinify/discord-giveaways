@@ -171,10 +171,10 @@ class GiveawaysManager extends EventEmitter {
                 .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }${options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have role called <@&${giveaway.roleid}>` : ''}`
+                    }\n${options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have the <@&${giveaway.roleid}> role to enter.` : ''}`
                 )
-                .setFooter(options.messages.endedAt)
-                .setTimestamp(new Date(giveaway.endAt).toISOString() + options.time);
+                .setFooter('Aestetik Moderation')
+                .setTimestamp(new Date(giveaway.endAt).toISOString());
             let message = await channel.send(options.messages.giveaway, { embed });
             message.react(giveaway.reaction);
             giveaway.messageID = message.id;
@@ -367,17 +367,17 @@ class GiveawaysManager extends EventEmitter {
                 await this.editGiveaway(giveaway.messageID, giveaway.data);
                 return;
             }
-            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${options.time}&ends=${Date.now() + options.time}`
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${giveaway.options.time}&ends=${Date.now() + giveaway.options.time}`
             let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
             embed
                  .setColor(giveaway.embedColor)
                  .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }${options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have role called <@&${giveaway.roleid}>` : ''}`
+                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have the <@&${giveaway.roleid}> role to enter.` : ''}`
                 )
-                .setFooter(options.messages.endedAt)
-                .setTimestamp(new Date(giveaway.endAt).toISOString() + options.time)
+                .setFooter('Aestetik Moderation')
+                .setTimestamp(new Date(giveaway.endAt).toISOString())
             giveaway.message.edit(giveaway.messages.giveaway, { embed });
             if (giveaway.remainingTime < this.options.updateCountdownEvery) {
                 setTimeout(() => this.end.call(this, giveaway.messageID), giveaway.remainingTime);

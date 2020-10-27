@@ -373,12 +373,14 @@ class Giveaway extends EventEmitter {
                     this.messages.winners.substr(1, this.messages.winners.length) +
                     ': ' +
                     formattedWinners;
+                 let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${this.options.time}&ends=${Date.now() + this.options.time}`
                 let embed = this.manager.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
                 embed
-                    .setAuthor(this.prize)
                     .setColor(this.embedColorEnd)
                     .setFooter(this.messages.endedAt)
-                    .setDescription(`${str}\n${this.hostedBy ? this.messages.hostedBy.replace("{user}", this.hostedBy) : ""}`)
+                    .setDescription(`🎁 • ${this.prize}\n🏅 • ${this.messages.winners}: ${this.winnerCount}\n${this.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
+                        this.hostedBy ? this.messages.hostedBy.replace('{user}', this.hostedBy) : ''
+                    }\n${this.options.messages.inviteToParticipate}\n${str}\n\n${this.rolereq === true ? `📣 Must have the <@&${this.roleid}> role to enter.` : ''}`)
                     .setTimestamp(new Date(this.endAt).toISOString());
                 this.message.edit(this.messages.giveawayEnded, { embed });
                 this.message.channel.send(
@@ -388,12 +390,14 @@ class Giveaway extends EventEmitter {
                 );
                 resolve(winners);
             } else {
+                 let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${this.options.time}&ends=${Date.now() + this.options.time}`
                 let embed = this.manager.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
                 embed
-                    .setAuthor(this.prize)
                     .setColor(this.embedColorEnd)
                     .setFooter(this.messages.endedAt)
-                    .setDescription(`${this.messages.noWinner}\n${this.hostedBy ? this.messages.hostedBy.replace("{user}", this.hostedBy) : ""}`)
+                    .setDescription(`🎁 • ${this.prize}\n🏅 • ${this.messages.winners}: ${this.winnerCount}\n${this.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
+                        this.hostedBy ? this.messages.hostedBy.replace('{user}', this.hostedBy) : ''
+                    }\n${this.options.messages.inviteToParticipate}\n${this.messages.noWinner}\n\n${this.rolereq === true ? `📣 Must have the <@&${this.roleid}> role to enter.` : ''}`)
                     .setTimestamp(new Date(this.endAt).toISOString());
                     this.message.edit(this.messages.giveawayEnded, { embed });
                 resolve();
