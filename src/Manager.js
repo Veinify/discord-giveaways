@@ -163,16 +163,16 @@ class GiveawaysManager extends EventEmitter {
                 rolereq: options.rolereq,
                 roleid: options.roleid
             });
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${ms(options.time)}&ends=${Date.now() + ms(options.time)}`
             let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
             embed
-                .setAuthor(giveaway.prize)
                 .setColor(giveaway.embedColor)
-                .setFooter(`${giveaway.winnerCount} ${giveaway.messages.winners}`)
                 .setDescription(
-                    `${options.messages.inviteToParticipate}\n${giveaway.content}\n${
+                    `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    } \n\n${giveaway.rolereq === true ? `📣 Must have role called <@&${giveaway.roleid}>` : ''}`
+                    }${options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have role called <@&${giveaway.roleid}>` : ''}`
                 )
+                .setFooter(options.messages.endedAt)
                 .setTimestamp(new Date(giveaway.endAt).toISOString());
             let message = await channel.send(options.messages.giveaway, { embed });
             message.react(giveaway.reaction);
