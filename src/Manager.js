@@ -164,7 +164,7 @@ class GiveawaysManager extends EventEmitter {
                 rolereq: options.rolereq,
                 roleid: options.roleid
             });
-            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${options.time}&ends=${Date.now() + options.time}`
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${giveaway.startAt}&ends=${giveaway.endAt}`
             let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
             embed
                 .setColor(giveaway.embedColor)
@@ -367,7 +367,7 @@ class GiveawaysManager extends EventEmitter {
                 await this.editGiveaway(giveaway.messageID, giveaway.data);
                 return;
             }
-            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${giveaway.options.time}&ends=${Date.now() + giveaway.options.time}`
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/?started=${giveaway.startAt}&ends=${giveaway.endAt}`
             let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
             embed
                  .setColor(giveaway.embedColor)
