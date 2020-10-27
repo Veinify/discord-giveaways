@@ -95,7 +95,13 @@ exports.defaultManagerOptions = {
         exemptPermissions: [],
         exemptMembers: () => false,
         embedColor: '#FF0000',
-        reaction: '🎉'
+        reaction: '🎉',
+        lastChance: {
+        enabled: false,
+        title: "🎉🎉 **LAST CHANCE TO ENTER!** 🎉🎉",
+        secondsBeforeLastChance : 5000,
+        embedColor: '#FBEF01'
+      }
     }
 };
 
