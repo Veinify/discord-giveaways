@@ -428,7 +428,7 @@ class Giveaway extends EventEmitter {
                 embed
                     .setColor(this.embedColorEnd)
                     .setFooter(this.messages.endedAt)
-                    .setDescription(`🎁 • **${this.prize}**\n🏅 • ${this.messages.winner}: ${this.messages.noWinner}\n🏆 • ${
+                    .setDescription(`🎁 • **${this.prize}**\n🏅 • ${this.messages.winners}: ${this.messages.noWinner}\n🏆 • ${
                         this.hostedBy ? this.messages.hostedBy.replace('{user}', this.hostedBy) : ''
                     }\n🎊 • Valid Entries: **${entries}**`)
                     .setTimestamp(new Date(this.endAt).toISOString());
