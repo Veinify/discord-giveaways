@@ -176,7 +176,7 @@ class GiveawaysManager extends EventEmitter {
                 .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }\n${options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have the <@&${giveaway.roleid}> role to enter.` : ''}\n${giveaway.joinedreq === true ? `📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}\n${giveaway.agereq === true ? `📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}`
+                    }\n${options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have the <@&${giveaway.roleid}> role to enter.` : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}`
                 )
                 .setFooter('Aestetik Moderation')
                 .setTimestamp(new Date(giveaway.endAt).toISOString());
@@ -379,7 +379,7 @@ class GiveawaysManager extends EventEmitter {
                  .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have the <@&${giveaway.roleid}> role to enter.` : ''}\n${giveaway.joinedreq === true ? `📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}\n${giveaway.agereq === true ? `📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}`
+                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have the <@&${giveaway.roleid}> role to enter.` : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}`
                 )
                 .setFooter('Aestetik Moderation')
                 .setTimestamp(new Date(giveaway.endAt).toISOString())
