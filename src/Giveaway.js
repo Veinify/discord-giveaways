@@ -96,6 +96,20 @@ class Giveaway extends EventEmitter {
          * @type {snowflake}
          */
          this.roleid = options.roleid;
+         /**
+          * Member#joinedAt requirement
+          * @type {booelan} timereq
+          * @type {string} time
+          */
+          this.timereq = options.timereq;
+          this.time = options.time;
+          /**
+           * Member#createdAt requirement
+           * @type {booelan} agereq
+           * @type {string} agetime
+           */
+           this.agereq = options.agereq;
+           this.agetime = options.agetime;
     }
 
     /**
@@ -258,7 +272,11 @@ class Giveaway extends EventEmitter {
             exemptMembers: this.options.exemptMembers,
             reaction: this.options.reaction,
             rolereq: this.options.rolereq,
-            roleid: this.options.roleid
+            roleid: this.options.roleid,
+            timereq: this.options.timereq,
+            time: this.options.time,
+            agereq: this.options.ageteq,
+            agetime: this.options.agetime
         };
         return baseData;
     }
@@ -371,6 +389,7 @@ class Giveaway extends EventEmitter {
             if (!this.channel) {
                 return reject('Unable to get the channel of the giveaway with message ID ' + this.messageID + '.');
             }
+            this.ended = true;
             await this.fetchMessage().catch(() => {});
             if (!this.message) {
                 return reject('Unable to fetch message with ID ' + this.messageID + '.');
@@ -378,7 +397,6 @@ class Giveaway extends EventEmitter {
             let winners = await this.roll();
             let entries = await this.ValidEntry();
             this.manager.emit('giveawayEnded', this, winners);
-            this.ended = true;
             this.manager.editGiveaway(this.messageID, this.data);
             if (winners.length > 0) {
                 let formattedWinners = winners.map(w => `<@${w.id}>`).join(', ');
@@ -437,7 +455,7 @@ class Giveaway extends EventEmitter {
             if (!this.message) {
                 return reject('Unable to fetch message with ID ' + this.messageID + '.');
             }
-            let winners = await this.roll();
+            let winners = await this.roll(options.winnerCount);
             if (winners.length > 0) {
                 let formattedWinners = winners.map(w => '<@' + w.id + '>').join(', ');
                 this.channel.send(options.messages.congrat.replace('{winners}', formattedWinners));
