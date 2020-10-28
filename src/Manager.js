@@ -162,7 +162,11 @@ class GiveawaysManager extends EventEmitter {
                 embedColor: options.embedColor,
                 embedColorEnd: options.embedColorEnd,
                 rolereq: options.rolereq,
-                roleid: options.roleid
+                roleid: options.roleid,
+                joinedreq: options.joinedreq,
+                joinedtime: options.joinedtime,
+                agereq: options.agereq,
+                agetime: options.agetime
             });
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
             let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
@@ -171,7 +175,7 @@ class GiveawaysManager extends EventEmitter {
                 .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }\n${options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have the <@&${giveaway.roleid}> role to enter.` : ''}`
+                    }\n${options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have the <@&${giveaway.roleid}> role to enter.` : ''}\n${giveaway.joinedreq === true ? `📣 Must have been in this server for atleast **${ms(joinedtime, {long: true})}**.` : ''}\n${giveaway.agereq === true ? `📣 Your account age must be older than **${ms(agetime, {long: true})}**.` : ''}`
                 )
                 .setFooter('Aestetik Moderation')
                 .setTimestamp(new Date(giveaway.endAt).toISOString());

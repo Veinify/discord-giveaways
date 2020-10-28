@@ -101,8 +101,8 @@ class Giveaway extends EventEmitter {
           * @type {booelan} timereq
           * @type {string} time
           */
-          this.timereq = options.timereq;
-          this.time = options.time;
+          this.joinedreq = options.joinedreq;
+          this.joinedtime = options.joinedtime;
           /**
            * Member#createdAt requirement
            * @type {booelan} agereq
@@ -273,9 +273,9 @@ class Giveaway extends EventEmitter {
             reaction: this.options.reaction,
             rolereq: this.options.rolereq,
             roleid: this.options.roleid,
-            timereq: this.options.timereq,
-            time: this.options.time,
-            agereq: this.options.ageteq,
+            joinedreq: this.options.joinedreq,
+            joinedtime: this.options.joinedtime,
+            agereq: this.options.agereq,
             agetime: this.options.agetime
         };
         return baseData;
