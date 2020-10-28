@@ -6,6 +6,7 @@ const writeFileAsync = promisify(writeFile);
 const existsAsync = promisify(exists);
 const readFileAsync = promisify(readFile);
 const ms = require("ms");
+const pms = require('pretty-ms');
 const Discord = require('discord.js');
 const {
     defaultGiveawayMessages,
@@ -175,7 +176,7 @@ class GiveawaysManager extends EventEmitter {
                 .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }\n${options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have the <@&${giveaway.roleid}> role to enter.` : ''}\n${giveaway.joinedreq === true ? `📣 Must have been in this server for atleast **${ms(giveaway.joinedtime, {long: true})}**.` : ''}\n${giveaway.agereq === true ? `📣 Your account age must be older than **${ms(giveaway.agetime, {long: true})}**.` : ''}`
+                    }\n${options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have the <@&${giveaway.roleid}> role to enter.` : ''}\n${giveaway.joinedreq === true ? `📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}\n${giveaway.agereq === true ? `📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}`
                 )
                 .setFooter('Aestetik Moderation')
                 .setTimestamp(new Date(giveaway.endAt).toISOString());
@@ -378,7 +379,7 @@ class GiveawaysManager extends EventEmitter {
                  .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have the <@&${giveaway.roleid}> role to enter.` : ''}\n${giveaway.joinedreq === true ? `📣 Must have been in this server for atleast **${ms(giveaway.joinedtime, {long: true})}**.` : ''}\n${giveaway.agereq === true ? `📣 Your account age must be older than **${ms(giveaway.agetime, {long: true})}**.` : ''}`
+                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have the <@&${giveaway.roleid}> role to enter.` : ''}\n${giveaway.joinedreq === true ? `📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}\n${giveaway.agereq === true ? `📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}`
                 )
                 .setFooter('Aestetik Moderation')
                 .setTimestamp(new Date(giveaway.endAt).toISOString())
