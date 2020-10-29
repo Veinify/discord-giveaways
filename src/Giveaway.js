@@ -424,8 +424,8 @@ class Giveaway extends EventEmitter {
                     }\n🎊 • Total Participants: **${entries}**`)
                     .setTimestamp(new Date(this.endAt).toISOString());
                 let endembed = new Discord.MessageEmbed()
-                .setColor(this.endembed)
-                .setDescription(`[GIVEAWAY LINK](https://discord.com/channels/${this.message.guild}/${this.message.channel}/${this.messageID})`)
+                .setColor(this.embedColorEnd)
+                .setDescription(`[GIVEAWAY LINK](https://discord.com/channels/${this.message.guild.id}/${this.message.channel.id}/${this.messageID})`)
                 .setFooter(`Giveaway ID: ${this.messageID}`)
                 .setTimestamp()
                 this.message.edit(this.messages.giveawayEnded, { embed });
