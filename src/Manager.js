@@ -182,8 +182,7 @@ class GiveawaysManager extends EventEmitter {
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt);
-            let message = await channel.send(options.messages.giveaway, { embed });
-            await message.react(giveaway.reaction);
+            let message = await channel.send(options.messages.giveaway, { embed }).then(message => message.react(giveaway.reaction));
             giveaway.messageID = message.id;
             this.giveaways.push(giveaway);
             await this.saveGiveaway(giveaway.messageID, giveaway.data);
