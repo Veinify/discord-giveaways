@@ -99,17 +99,24 @@ class Giveaway extends EventEmitter {
          /**
           * Member#joinedAt requirement
           * @type {booelan} timereq
-          * @type {string} time
+          * @type {snowflake} time
           */
           this.joinedreq = options.joinedreq;
           this.joinedtime = options.joinedtime;
           /**
            * Member#createdAt requirement
            * @type {booelan} agereq
-           * @type {string} agetime
+           * @type {snowflake} agetime
            */
            this.agereq = options.agereq;
            this.agetime = options.agetime;
+           /**
+            * Guild#fetchInvites requirement
+            * @type {booelan} invitereq
+            * @type {snowflake} inviteamount
+            */
+            this.invitereq = options.invitereq;
+            this.inviteamount = options.inviteamount;
     }
 
     /**
@@ -276,7 +283,9 @@ class Giveaway extends EventEmitter {
             joinedreq: this.options.joinedreq,
             joinedtime: this.options.joinedtime,
             agereq: this.options.agereq,
-            agetime: this.options.agetime
+            agetime: this.options.agetime,
+            invitereq: this.options.invitereq,
+            inviteamount: this.options.inviteamount
         };
         return baseData;
     }
@@ -412,14 +421,18 @@ class Giveaway extends EventEmitter {
                     .setFooter(this.messages.endedAt)
                     .setDescription(`🎁 • **${this.prize}**\n🏅 • ${str}\n🏆 • ${
                         this.hostedBy ? this.messages.hostedBy.replace('{user}', this.hostedBy) : ''
-                    }\n🎊 • Valid Entries: **${entries}**`)
+                    }\n🎊 • Total Participants: **${entries}**`)
                     .setTimestamp(new Date(this.endAt).toISOString());
+                let endembed = new MessageEmbed()
+                .setColor(this.endembed)
+                .setDescription(`[GIVEAWAY LINK](https://discord.com/channels/${this.message.guild}/${this.message.channel}/${this.messageID})`)
+                .setFooter(`Giveaway ID: ${this.messageID}`)
+                .setTimestamp()
                 this.message.edit(this.messages.giveawayEnded, { embed });
                 this.message.channel.send(
                     this.messages.winMessage
                         .replace('{winners}', formattedWinners)
-                        .replace('{prize}', this.prize)
-                );
+                        .replace('{prize}', this.prize), { endembed });
                 resolve(winners);
             } else {
                 let entries = await this.ValidEntry();
@@ -430,7 +443,7 @@ class Giveaway extends EventEmitter {
                     .setFooter(this.messages.endedAt)
                     .setDescription(`🎁 • **${this.prize}**\n🏅 • ${this.messages.winners}: ${this.messages.noWinner}\n🏆 • ${
                         this.hostedBy ? this.messages.hostedBy.replace('{user}', this.hostedBy) : ''
-                    }\n🎊 • Valid Entries: **${entries}**`)
+                    }\n🎊 • Total Participants: **${entries}**`)
                     .setTimestamp(new Date(this.endAt).toISOString());
                     this.message.edit(this.messages.giveawayEnded, { embed });
                 resolve();
