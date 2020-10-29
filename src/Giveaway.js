@@ -423,7 +423,7 @@ class Giveaway extends EventEmitter {
                         this.hostedBy ? this.messages.hostedBy.replace('{user}', this.hostedBy) : ''
                     }\n🎊 • Total Participants: **${entries}**`)
                     .setTimestamp(new Date(this.endAt).toISOString());
-                let endembed = new MessageEmbed()
+                let endembed = new Discord.MessageEmbed()
                 .setColor(this.endembed)
                 .setDescription(`[GIVEAWAY LINK](https://discord.com/channels/${this.message.guild}/${this.message.channel}/${this.messageID})`)
                 .setFooter(`Giveaway ID: ${this.messageID}`)
