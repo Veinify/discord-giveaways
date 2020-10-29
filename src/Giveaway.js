@@ -115,8 +115,8 @@ class Giveaway extends EventEmitter {
             * @type {booelan} invitereq
             * @type {snowflake} inviteamount
             */
-            this.invitereq = options.invitereq;
-            this.inviteamount = options.inviteamount;
+            this.messagereq = options.messagereq;
+            this.messageamount = options.messageamount;
     }
 
     /**
@@ -284,8 +284,8 @@ class Giveaway extends EventEmitter {
             joinedtime: this.options.joinedtime,
             agereq: this.options.agereq,
             agetime: this.options.agetime,
-            invitereq: this.options.invitereq,
-            inviteamount: this.options.inviteamount
+            messagereq: this.options.messagereq,
+            messageamount: this.options.messageamount
         };
         return baseData;
     }
