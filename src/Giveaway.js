@@ -432,7 +432,7 @@ class Giveaway extends EventEmitter {
                 this.message.channel.send(
                     this.messages.winMessage
                         .replace('{winners}', formattedWinners)
-                        .replace('{prize}', this.prize), { endembed });
+                        .replace('{prize}', this.prize), endembed);
                 resolve(winners);
             } else {
                 let entries = await this.ValidEntry();
@@ -444,7 +444,7 @@ class Giveaway extends EventEmitter {
                     .setDescription(`🎁 • **${this.prize}**\n🏅 • ${this.messages.winners}: ${this.messages.noWinner}\n🏆 • ${
                         this.hostedBy ? this.messages.hostedBy.replace('{user}', this.hostedBy) : ''
                     }\n🎊 • Total Participants: **${entries}**`)
-                    .setTimestamp(new Date(this.endAt).toISOString());
+                    .setTimestamp(this.endAt);
                     this.message.edit(this.messages.giveawayEnded, { embed });
                 resolve();
             }
