@@ -389,7 +389,6 @@ class GiveawaysManager extends EventEmitter {
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
         let roleslist = '';
         let c = 0;
-        console.log(giveaway.roleid)
       if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
         giveaway.roleid.forEach(function(role) {
             roleslist += (c === 0 ? `📣 Must have the <@&${role}> role.` : `\n📣 Must have the <@&${role}> role.`)
