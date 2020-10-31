@@ -169,7 +169,8 @@ class GiveawaysManager extends EventEmitter {
                 agereq: options.agereq,
                 agetime: options.agetime,
                 messagereq: options.messagereq,
-                messageamount: options.messageamount
+                messageamount: options.messageamount,
+                isdrop: options.isdrop
             });
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
         let roleslist = '';
@@ -192,7 +193,7 @@ class GiveawaysManager extends EventEmitter {
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt);
-            let message = await channel.send(options.messages.giveaway, { embed })
+            let message = await channel.send(options.isdrop ? options.messages.drop : options.messages.giveaway, { embed })
             roleslist = '';
             c = 0;
             message.react(giveaway.reaction);
@@ -409,7 +410,7 @@ class GiveawaysManager extends EventEmitter {
                 .setTimestamp(giveaway.endAt)
             roleslist = '';
             c = 0;
-            giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.messages.giveaway), { embed });
+            giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
             if (giveaway.remainingTime < this.options.updateCountdownEvery) {
                 setTimeout(() => this.end.call(this, giveaway.messageID), giveaway.remainingTime);
             }

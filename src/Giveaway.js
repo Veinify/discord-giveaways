@@ -117,6 +117,11 @@ class Giveaway extends EventEmitter {
             */
             this.messagereq = options.messagereq;
             this.messageamount = options.messageamount;
+            /**
+             * Mark the giveaway as drop
+             * @type {booelan} 
+             */
+             this.isdrop = options.isdrop;
     }
 
     /**
@@ -285,7 +290,8 @@ class Giveaway extends EventEmitter {
             agereq: this.options.agereq,
             agetime: this.options.agetime,
             messagereq: this.options.messagereq,
-            messageamount: this.options.messageamount
+            messageamount: this.options.messageamount,
+            isdrop: this.options.isdrop
         };
         return baseData;
     }
