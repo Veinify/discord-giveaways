@@ -172,17 +172,29 @@ class GiveawaysManager extends EventEmitter {
                 messageamount: options.messageamount
             });
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
+        let roleslist = '';
+        let c = 0;
+      if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
+        giveaway.roleid.forEach(function(role) {
+            roleslist += (c === 0 ? `📣 Must have the <@&${role}> role.` : `\n📣 Must have the <@&${role}> role.`)
+            c++
+        })
+    } else if (giveaway.roleid.length === 1) {
+        roleslist += `📣 Must have the <@&${giveaway.roleid}> role.`
+    }
             let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
             embed
                 .setColor(giveaway.embedColor)
                 .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }\n${options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have the <@&${giveaway.roleid}> role to enter.` : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
+                    }\n${options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? roleslist : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt);
             let message = await channel.send(options.messages.giveaway, { embed })
+            roleslist = '';
+            c = 0;
             message.react(giveaway.reaction);
             giveaway.messageID = message.id;
             this.giveaways.push(giveaway);
@@ -375,16 +387,28 @@ class GiveawaysManager extends EventEmitter {
                 return;
             }
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
+        let roleslist = '';
+        let c = 0;
+      if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
+        giveaway.roleid.forEach(function(role) {
+            roleslist += (c === 0 ? `📣 Must have the <@&${role}> role.` : `\n📣 Must have the <@&${role}> role.`)
+            c++
+        })
+    } else if (giveaway.roleid.length === 1) {
+        roleslist += `📣 Must have the <@&${giveaway.roleid}> role.`
+    }
             let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
             (this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? embed.setColor(this.options.default.lastChance.lastEmbedColor) : embed.setColor(giveaway.embedColor))
             embed
                  .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? `📣 Must have the <@&${giveaway.roleid}> role to enter.` : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
+                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${giveaway.rolereq === true ? roleslist : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt)
+            roleslist = '';
+            c = 0;
             giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.messages.giveaway), { embed });
             if (giveaway.remainingTime < this.options.updateCountdownEvery) {
                 setTimeout(() => this.end.call(this, giveaway.messageID), giveaway.remainingTime);

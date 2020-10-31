@@ -37,8 +37,11 @@
   "homepage": "https://discord-giveaways.js.org",
   "dependencies": {
     "deepmerge": "^4.2.2",
+    "didyoumean2": "^4.1.0",
+    "env": "0.0.2",
     "ms": "^2.1.2",
-    "pretty-ms": "^7.0.1"
+    "pretty-ms": "^7.0.1",
+    "simple-duration": "^1.0.1"
   },
   "devDependencies": {
     "@types/node": "^14.0.5",
