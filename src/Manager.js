@@ -200,6 +200,7 @@ class GiveawaysManager extends EventEmitter {
             giveaway.messageID = message.id;
             this.giveaways.push(giveaway);
             await this.saveGiveaway(giveaway.messageID, giveaway.data);
+            this._checkGiveaway.call(this)
             resolve(giveaway);
         });
     }
