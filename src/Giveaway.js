@@ -434,7 +434,7 @@ class Giveaway extends EventEmitter {
                 .setDescription(`[GIVEAWAY LINK](https://discord.com/channels/${this.message.guild.id}/${this.message.channel.id}/${this.messageID})`)
                 .setFooter(`Giveaway ID: ${this.messageID}`)
                 .setTimestamp()
-                this.message.edit(this.messages.giveawayEnded, { embed });
+                this.message.edit(this.isdrop ? this.messages.dropEnded : this.messages.giveawayEnded, { embed });
                 this.message.channel.send(
                     this.messages.winMessage
                         .replace('{winners}', formattedWinners)
@@ -451,7 +451,7 @@ class Giveaway extends EventEmitter {
                         this.hostedBy ? this.messages.hostedBy.replace('{user}', this.hostedBy) : ''
                     }\n🎊 • Total Participants: **${entries}**`)
                     .setTimestamp(this.endAt);
-                    this.message.edit(this.messages.giveawayEnded, { embed });
+                    this.message.edit(this.isdrop ? this.messages.dropEnded : this.messages.giveawayEnded, { embed });
                 resolve();
             }
         });
