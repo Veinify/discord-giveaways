@@ -106,7 +106,7 @@ class GiveawaysManager extends EventEmitter {
             giveaway.end().then(resolve).catch(reject);
         });
     }
-
+    
     /**
      * Starts a new giveaway
      *
@@ -203,7 +203,17 @@ class GiveawaysManager extends EventEmitter {
             resolve(giveaway);
         });
     }
-
+    
+    ValidEntries(messageID) {
+        return new Promise(async (resolve, reject) => {
+            const giveaway = this.giveaways.find((g) => g.messageID === messageID);
+            if (!giveaway) {
+                return reject('No giveaway found with ID ' + messageID + '.');
+            }
+            giveaway.ValidEntry().then(resolve).catch(reject);
+        });
+    }
+    
     /**
      * Choose new winner(s) for the giveaway
      * @param {Discord.Snowflake} messageID The message ID of the giveaway to reroll
