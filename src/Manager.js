@@ -180,7 +180,7 @@ class GiveawaysManager extends EventEmitter {
             roleslist += (c === 0 ? `📣 Must have the <@&${role}> role.` : `\n📣 Must have the <@&${role}> role.`)
             c++
         })
-    } else if (giveaway.roleid.length === 1) {
+    } else if (Array.isArray(giveaway.roleid) && giveaway.roleid.length === 1) {
         roleslist += `📣 Must have the <@&${giveaway.roleid}> role.`
     }
             let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
