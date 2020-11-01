@@ -184,7 +184,7 @@ class GiveawaysManager extends EventEmitter {
                     serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
                 }).catch(err => {
-                    console.log(err)
+                    throw new Error(err.stack)
                     serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')})
                 
             })
@@ -194,7 +194,7 @@ class GiveawaysManager extends EventEmitter {
                     serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
                 }).catch(err => {
-                    console.log(err)
+                    throw new Error(err.stack)
                     serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')})
         }
         let roleslist = '';
@@ -433,7 +433,7 @@ class GiveawaysManager extends EventEmitter {
                     serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
                 }).catch(err => {
-                    console.log(err)
+                    throw new Error(err.stack)
                     serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')})
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
@@ -442,7 +442,7 @@ class GiveawaysManager extends EventEmitter {
                     serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
                 }).catch(err => {
-                    console.log(err)
+                    throw new Error(err.stack)
                     serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')})
         }
         let roleslist = '';
@@ -498,7 +498,7 @@ class GiveawaysManager extends EventEmitter {
                     serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
                 }).catch(err => {
-                    console.log(err)
+                    throw new Error(err.stack)
                     serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')})
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
@@ -507,7 +507,7 @@ class GiveawaysManager extends EventEmitter {
                     serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
                 }).catch(err => {
-                    console.log(err)
+                    throw new Error(err.stack)
                     serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')})
         }
         let roleslist = '';
