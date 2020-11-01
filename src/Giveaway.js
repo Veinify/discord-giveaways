@@ -94,6 +94,7 @@ class Giveaway extends EventEmitter {
         this.rolereq = options.rolereq;
         /**
          * @type {snowflake}
+         * @type {Collection}
          */
          this.roleid = options.roleid;
          /**
@@ -113,7 +114,7 @@ class Giveaway extends EventEmitter {
            /**
             * Guild#fetchInvites requirement
             * @type {booelan} invitereq
-            * @type {snowflake} inviteamount
+            * @type {Collection}
             */
             this.messagereq = options.messagereq;
             this.messageamount = options.messageamount;
@@ -122,6 +123,14 @@ class Giveaway extends EventEmitter {
              * @type {booelan} 
              */
              this.isdrop = options.isdrop;
+             /**
+              * Server Requirement
+              * @type {booelan}
+              * @type {string} server link
+              * @type {Collection} because we allow multiple server.
+              */
+              this.serverreq = options.serverreq;
+              this.serverlink = options.serverlink;
     }
 
     /**
@@ -291,7 +300,9 @@ class Giveaway extends EventEmitter {
             agetime: this.options.agetime,
             messagereq: this.options.messagereq,
             messageamount: this.options.messageamount,
-            isdrop: this.options.isdrop
+            isdrop: this.options.isdrop,
+            serverreq: this.options.serverreq,
+            serverlink: this.options.serverlink,
         };
         return baseData;
     }
