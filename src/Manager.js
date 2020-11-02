@@ -498,6 +498,7 @@ class GiveawaysManager extends EventEmitter {
             giveaway.serverlink.forEach(function (invitelink) {
                 giveaway.message.client.fetchInvite(invitelink).then(invite => {
                     let guildname = invite.guild.name;
+                    giveaway.message.channel.send(guildname)
                     serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
                 }).catch(err => {
