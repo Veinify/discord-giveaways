@@ -7,7 +7,8 @@ const existsAsync = promisify(exists);
 const readFileAsync = promisify(readFile);
 const ms = require("ms");
 const pms = require('pretty-ms');
-const Discord = require('discord.js');
+const Discord = require('discord.js')
+const { addchartostring } = require('./utils.js')
 const {
     defaultGiveawayMessages,
     defaultManagerOptions,
@@ -498,11 +499,10 @@ class GiveawaysManager extends EventEmitter {
             giveaway.serverlink.forEach(function (invitelink) {
                 giveaway.message.client.fetchInvite(invitelink).then(invite => {
                     let guildname = invite.guild.name;
-                    (cc === 0 ? serverslist += `📣 Must be in [${guildname}](${invite}).` : serverslist += `\n📣 Must be in [${guildname}](${invite}].`)
+                    addchartostring(serverslist, (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`))
                     cc++
                 }).catch(err => {
-                    let msg = serverslist;
-                    (cc === 0 ? serverslist += '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : serverslist += '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
+                    addchartostring(serverslist, (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.'))
                     throw new Error(err.stack)
                 })
             })
