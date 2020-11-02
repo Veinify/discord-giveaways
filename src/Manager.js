@@ -496,25 +496,22 @@ class GiveawaysManager extends EventEmitter {
         let cc = 0;
         if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
             giveaway.serverlink.forEach(function (invitelink) {
-                let msg = serverslist;
                 giveaway.message.client.fetchInvite(invitelink).then(invite => {
                     let guildname = invite.guild.name;
-                    msg += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
+                    (cc === 0 ? serverslist += `📣 Must be in [${guildname}](${invite}).` : serverslist += `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
                 }).catch(err => {
                     let msg = serverslist;
-                    msg += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
+                    (cc === 0 ? serverslist += '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : serverslist += '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
                     throw new Error(err.stack)
                 })
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
             giveaway.message.client.fetchInvite(giveaway.serverlink).then(invite => {
                     let guildname = invite.guild.name;
-                    let msg = serverslist;
-                    msg += `📣 Must be in [${guildname}](${invite}).`
+                    serverslist += `📣 Must be in [${guildname}](${invite}).`
                 }).catch(err => {
-                    let msg = serverslist;
-                    msg += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
+                    (cc === 0 ? serverslist +='⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : serverslist += '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
                     throw new Error(err.stack)
                 })
         }
@@ -541,8 +538,8 @@ class GiveawaysManager extends EventEmitter {
             giveaway.message.channel.send(serverslist)
             roleslist = '';
             c = 0;
-            serverslist = '';
-            cc = 0;
+            //serverslist = '';
+            //cc = 0;
             giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
             if (giveaway.remainingTime < this.options.updateCountdownEvery) {
                 setTimeout(() => this.end.call(this, giveaway.messageID), giveaway.remainingTime);
