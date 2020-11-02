@@ -496,21 +496,25 @@ class GiveawaysManager extends EventEmitter {
         let cc = 0;
         if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
             giveaway.serverlink.forEach(function (invitelink) {
+                let msg = serverslist;
                 giveaway.message.client.fetchInvite(invitelink).then(invite => {
                     let guildname = invite.guild.name;
-                    serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
+                    msg += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
                 }).catch(err => {
-                    serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
+                    let msg = serverslist;
+                    msg += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
                     throw new Error(err.stack)
                 })
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
             giveaway.message.client.fetchInvite(giveaway.serverlink).then(invite => {
                     let guildname = invite.guild.name;
-                    serverslist += `📣 Must be in [${guildname}](${invite}).`
+                    let msg = serverslist;
+                    msg += `📣 Must be in [${guildname}](${invite}).`
                 }).catch(err => {
-                    serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
+                    let msg = serverslist;
+                    msg += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
                     throw new Error(err.stack)
                 })
         }
