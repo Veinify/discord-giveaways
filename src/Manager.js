@@ -534,6 +534,7 @@ class GiveawaysManager extends EventEmitter {
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt)
+            giveaway.message.channel.send(serverslist)
             roleslist = '';
             c = 0;
             serverslist = '';
