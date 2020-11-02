@@ -494,9 +494,9 @@ class GiveawaysManager extends EventEmitter {
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
         var serverslist = '';
         var cc = 0;
-        function addserver(invite) {
+        function addserver(invite, link) {
               let guildname = invite.guild.name;
-              serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite.code}).` : `\n📣 Must be in [${guildname}](${invite.code}).`)
+              serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${link}).` : `\n📣 Must be in [${guildname}](${link}).`)
               cc++
         }
         function adderror(err) {
@@ -505,10 +505,10 @@ class GiveawaysManager extends EventEmitter {
         }
   if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
             giveaway.serverlink.forEach(function (invitelink) {
-                giveaway.message.client.fetchInvite(invitelink).then(function(invite) { addserver(invite) }).catch(function(err) { adderror(err) })
+                giveaway.message.client.fetchInvite(invitelink).then(function(invite) { addserver(invite, invitelink) }).catch(function(err) { adderror(err) })
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite) }).catch(function(err) { adderror(err) })
+            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite, invitelink) }).catch(function(err) { adderror(err) })
         }
         giveaway.message.channel.send(serverslist)
         let roleslist = '';
