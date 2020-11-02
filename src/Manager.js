@@ -492,11 +492,12 @@ class GiveawaysManager extends EventEmitter {
                 return;
             }
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
-        let serverslist = '';
-        let cc = 0;
+        var serverslist = '';
+        var cc = 0;
         function addserver(invite) {
               let guildname = invite.guild.name;
               serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite.code}).` : `\n📣 Must be in [${guildname}](${invite.code}].`)
+              giveaway.message.channel.send(serverslist)
               cc++
         }
         function adderror(err) {
@@ -530,7 +531,6 @@ class GiveawaysManager extends EventEmitter {
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt)
-            giveaway.message.channel.send(serverslist)
             roleslist = '';
             c = 0;
             //serverslist = '';
