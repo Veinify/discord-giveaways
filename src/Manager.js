@@ -173,13 +173,12 @@ class GiveawaysManager extends EventEmitter {
                 serverreq: options.serverreq,
                 serverlink: options.serverlink
             });
-            await giveaway.fetchMessage().catch(() => {})
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
         let serverslist = '';
         let cc = 0;
         if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
             giveaway.serverlink.forEach(function (invitelink) {
-                giveaway.message.client.fetchInvite(invitelink).then(invite => {
+                this.client.fetchInvite(invitelink).then(invite => {
                     let guildname = invite.guild.name;
                     serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
@@ -190,7 +189,7 @@ class GiveawaysManager extends EventEmitter {
             }).catch(err => {
                 throw new Error(err.stack)})
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            giveaway.message.client.fetchInvite(giveaway.serverlink).then(invite => {
+            this.client.fetchInvite(giveaway.serverlink).then(invite => {
                     let guildname = invite.guild.name;
                     serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
@@ -424,13 +423,12 @@ class GiveawaysManager extends EventEmitter {
                 await this.editGiveaway(giveaway.messageID, giveaway.data);
                 return;
             }
-            await giveaway.fetchMessage().catch(() => {})
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
         let serverslist = '';
         let cc = 0;
         if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
             giveaway.serverlink.forEach(function (invitelink) {
-                giveaway.message.client.fetchInvite(invitelink).then(invite => {
+                this.client.fetchInvite(invitelink).then(invite => {
                     let guildname = invite.guild.name;
                     serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
@@ -440,7 +438,7 @@ class GiveawaysManager extends EventEmitter {
             }).catch(err => {
                 throw new Error(err.stack)})
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            giveaway.message.client.fetchInvite(giveaway.serverlink).then(invite => {
+            this.client.fetchInvite(giveaway.serverlink).then(invite => {
                     let guildname = invite.guild.name;
                     serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
@@ -491,13 +489,12 @@ class GiveawaysManager extends EventEmitter {
                 await this.editGiveaway(giveaway.messageID, giveaway.data);
                 return;
             }
-            await giveaway.fetchMessage().then(() => {})
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
         let serverslist = '';
         let cc = 0;
         if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
             giveaway.serverlink.forEach(function (invitelink) {
-                giveaway.message.client.fetchInvite(invitelink).then(invite => {
+                this.client.fetchInvite(invitelink).then(invite => {
                     let guildname = invite.guild.name;
                     serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
@@ -507,7 +504,7 @@ class GiveawaysManager extends EventEmitter {
             }).catch(err => {
                 throw new Error(err.stack)})
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            giveaway.message.client.fetchInvite(giveaway.serverlink).then(invite => {
+            this.client.fetchInvite(giveaway.serverlink).then(invite => {
                     let guildname = invite.guild.name;
                     serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
