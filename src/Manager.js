@@ -57,7 +57,6 @@ class GiveawaysManager extends EventEmitter {
          */
         this.v12 = this.options.DJSlib === 'v12';
         this._init();
-
         this.client.on('raw', async (packet) => {
             if (!['MESSAGE_REACTION_ADD', 'MESSAGE_REACTION_REMOVE'].includes(packet.t)) return;
             const giveaway = this.giveaways.find((g) => g.messageID === packet.d.message_id);
@@ -174,6 +173,7 @@ class GiveawaysManager extends EventEmitter {
                 serverreq: options.serverreq,
                 serverlink: options.serverlink
             });
+            await giveaway.fetchMessage().catch(() => {})
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
         let serverslist = '';
         let cc = 0;
@@ -424,6 +424,7 @@ class GiveawaysManager extends EventEmitter {
                 await this.editGiveaway(giveaway.messageID, giveaway.data);
                 return;
             }
+            await giveaway.fetchMessage().catch(() => {})
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
         let serverslist = '';
         let cc = 0;
@@ -490,6 +491,7 @@ class GiveawaysManager extends EventEmitter {
                 await this.editGiveaway(giveaway.messageID, giveaway.data);
                 return;
             }
+            await giveaway.fetchMessage().then(() => {})
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
         let serverslist = '';
         let cc = 0;
