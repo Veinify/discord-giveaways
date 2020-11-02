@@ -7,8 +7,7 @@ const existsAsync = promisify(exists);
 const readFileAsync = promisify(readFile);
 const ms = require("ms");
 const pms = require('pretty-ms');
-const Discord = require('discord.js')
-const { addchartostring } = require('./utils.js')
+const Discord = require('discord.js');
 const {
     defaultGiveawayMessages,
     defaultManagerOptions,
@@ -478,7 +477,7 @@ class GiveawaysManager extends EventEmitter {
                 setTimeout(() => this.end.call(this, giveaway.messageID), giveaway.remainingTime);
             }
     }
-    async _checkGiveaway() {
+    _checkGiveaway() {
         if (this.giveaways.length <= 0) return;
         this.giveaways.forEach(async (giveaway) => {
             if (giveaway.ended) return;
@@ -493,29 +492,23 @@ class GiveawaysManager extends EventEmitter {
                 return;
             }
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
-        let servermessage = [];
+        let serverslist = '';
         let cc = 0;
+        function addserver(invite) {
+              let guildname = invite.guild.name;
+              serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite.code}).` : `\n📣 Must be in [${guildname}](${invite.code}].`)
+              cc++
+        }
+        function adderror(err) {
+            serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
+            throw new Error(err.stack)
+        }
         if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
-            giveaway.serverlink.forEach(async function (invitelink) {
-                try {
-                let invite = await giveaway.message.client.fetchInvite(invitelink)
-                    let guildname = invite.guild.name;
-                    servermessage.push(cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
-                    cc++
-                } catch (err) {
-                    servermessage.push(cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
-                    throw new Error(err.stack)
-                }
+            giveaway.serverlink.forEach(function (invitelink) {
+                giveaway.message.client.fetchInvite(invitelink).then(invite => addserver(invite)).catch(err => adderror(err))
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            try {
-            let invite = await giveaway.message.client.fetchInvite(giveaway.serverlink)
-                    let guildname = invite.guild.name;
-                     servermessage.push(`📣 Must be in [${guildname}](${invite}).`)
-                } catch(err) {
-                    servermessage.push(cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
-                    throw new Error(err.stack)
-                }
+            giveaway.message.client.fetchInvite(giveaway.serverlink).then(invite => addserver(invite)).catch(err => adderror(err))
         }
         let roleslist = '';
         let c = 0;
@@ -533,11 +526,11 @@ class GiveawaysManager extends EventEmitter {
                  .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${servermessage.join('')}\n${giveaway.rolereq === true ? roleslist : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
+                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${serverslist}\n${giveaway.rolereq === true ? roleslist : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt)
-            giveaway.message.channel.send(servermessage.join(''))
+            giveaway.message.channel.send(serverslist)
             roleslist = '';
             c = 0;
             //serverslist = '';
