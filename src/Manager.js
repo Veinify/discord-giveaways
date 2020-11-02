@@ -496,15 +496,13 @@ class GiveawaysManager extends EventEmitter {
         var cc = 0;
         function addserver(invite) {
               let guildname = invite.guild.name;
-              serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite.code}).` : `\n📣 Must be in [${guildname}](${invite.code}].`)
-              giveaway.message.channel.send(serverslist)
+              serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite.code}).` : `\n📣 Must be in [${guildname}](${invite.code}).`)
               cc++
         }
         function adderror(err) {
             serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
             throw new Error(err.stack)
         }
-      
   if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
             giveaway.serverlink.forEach(function (invitelink) {
                 giveaway.message.client.fetchInvite(invitelink).then(function(invite) { addserver(invite) }).catch(function(err) { adderror(err) })
@@ -512,6 +510,7 @@ class GiveawaysManager extends EventEmitter {
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
             giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite) }).catch(function(err) { adderror(err) })
         }
+        giveaway.message.channel.send(serverslist)
         let roleslist = '';
         let c = 0;
       if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
@@ -534,8 +533,8 @@ class GiveawaysManager extends EventEmitter {
                 .setTimestamp(giveaway.endAt)
             roleslist = '';
             c = 0;
-            //serverslist = '';
-            //cc = 0;
+            serverslist = '';
+            cc = 0;
             giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
             if (giveaway.remainingTime < this.options.updateCountdownEvery) {
                 setTimeout(() => this.end.call(this, giveaway.messageID), giveaway.remainingTime);
