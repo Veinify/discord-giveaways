@@ -493,26 +493,25 @@ class GiveawaysManager extends EventEmitter {
                 return;
             }
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
-        let servermessage = '';
+        let servermessage = [];
         let cc = 0;
         if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
             giveaway.serverlink.forEach(function (invitelink) {
                 giveaway.message.client.fetchInvite(invitelink).then(invite => {
                     let guildname = invite.guild.name;
-                    addchartostring(servermessage, (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`))
-                    giveaway.message.channel.send(servermessage)
+                    servermessage.push(cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
                 }).catch(err => {
-                    addchartostring(servermessage, (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.'))
+                    servermessage.push(cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
                     throw new Error(err.stack)
                 })
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
             giveaway.message.client.fetchInvite(giveaway.serverlink).then(invite => {
                     let guildname = invite.guild.name;
-                     addchartostring(servermessage, `📣 Must be in [${guildname}](${invite}).`)
+                     servermessage.push(`📣 Must be in [${guildname}](${invite}).`)
                 }).catch(err => {
-                    (cc === 0 ? addchartostring(servermessage, '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.') : addchartostring(servermessage, '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.'))
+                    servermessage.push(cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
                     throw new Error(err.stack)
                 })
         }
