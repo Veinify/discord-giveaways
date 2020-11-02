@@ -498,19 +498,20 @@ class GiveawaysManager extends EventEmitter {
               let guildname = invite.guild.name;
               serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${link}).` : `\n📣 Must be in [${guildname}](${link}).`)
               cc++
+              return serverslist && cc;
         }
         function adderror(err) {
             serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
             throw new Error(err.stack)
+            return serverslist;
         }
   if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
             giveaway.serverlink.forEach(function (invitelink) {
-                giveaway.message.client.fetchInvite(invitelink).then(async function(invite) { await addserver(invite, invitelink) }).catch(async function(err) { await adderror(err) })
+                giveaway.message.client.fetchInvite(invitelink).then( function(invite) { addserver(invite, invitelink) }).catch( function(err) { adderror(err) })
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            giveaway.message.client.fetchInvite(giveaway.serverlink).then(async function(invite) { await addserver(invite, invitelink) }).catch(async function(err) { await adderror(err) })
+            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite, invitelink) }).catch(function(err) { adderror(err) })
         }
-        giveaway.message.channel.send(serverslist)
         let roleslist = '';
         let c = 0;
       if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
