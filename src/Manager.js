@@ -500,7 +500,7 @@ class GiveawaysManager extends EventEmitter {
                     let guildname = invite.guild.name;
                     serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
-                    giveaway.message.channel.send(serverslist)
+                    giveaway.message.channel.send(giveaway.serverreq)
                 }).catch(err => {
                     serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
                     throw new Error(err.stack)
@@ -510,7 +510,6 @@ class GiveawaysManager extends EventEmitter {
             giveaway.message.client.fetchInvite(giveaway.serverlink).then(invite => {
                     let guildname = invite.guild.name;
                     serverslist += `📣 Must be in [${guildname}](${invite}).`
-                    cc++
                 }).catch(err => {
                     serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
                     throw new Error(err.stack)
