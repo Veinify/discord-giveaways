@@ -478,7 +478,7 @@ class GiveawaysManager extends EventEmitter {
                 setTimeout(() => this.end.call(this, giveaway.messageID), giveaway.remainingTime);
             }
     }
-    _checkGiveaway() {
+    async _checkGiveaway() {
         if (this.giveaways.length <= 0) return;
         this.giveaways.forEach(async (giveaway) => {
             if (giveaway.ended) return;
@@ -496,24 +496,26 @@ class GiveawaysManager extends EventEmitter {
         let servermessage = [];
         let cc = 0;
         if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
-            giveaway.serverlink.forEach(function (invitelink) {
-                giveaway.message.client.fetchInvite(invitelink).then(invite => {
+            giveaway.serverlink.forEach(async function (invitelink) {
+                try {
+                let invite = await giveaway.message.client.fetchInvite(invitelink)
                     let guildname = invite.guild.name;
                     servermessage.push(cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
                     cc++
-                }).catch(err => {
+                } catch (err) {
                     servermessage.push(cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
                     throw new Error(err.stack)
-                })
+                }
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            giveaway.message.client.fetchInvite(giveaway.serverlink).then(invite => {
+            try {
+            let invite = await giveaway.message.client.fetchInvite(giveaway.serverlink)
                     let guildname = invite.guild.name;
                      servermessage.push(`📣 Must be in [${guildname}](${invite}).`)
-                }).catch(err => {
+                } catch(err) {
                     servermessage.push(cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
                     throw new Error(err.stack)
-                })
+                }
         }
         let roleslist = '';
         let c = 0;
