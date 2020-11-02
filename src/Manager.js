@@ -187,7 +187,8 @@ class GiveawaysManager extends EventEmitter {
                     throw new Error(err.stack)
                     serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')})
                 
-            })
+            }).catch(err => {
+                throw new Error(err.stack)})
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
             this.client.fetchInvite(giveaway.serverlink).then(invite => {
                     let guildname = invite.guild.name;
@@ -435,7 +436,8 @@ class GiveawaysManager extends EventEmitter {
                 }).catch(err => {
                     throw new Error(err.stack)
                     serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')})
-            })
+            }).catch(err => {
+                throw new Error(err.stack)})
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
             this.client.fetchInvite(giveaway.serverlink).then(invite => {
                     let guildname = invite.guild.name;
@@ -500,7 +502,8 @@ class GiveawaysManager extends EventEmitter {
                 }).catch(err => {
                     throw new Error(err.stack)
                     serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')})
-            })
+            }).catch(err => {
+                throw new Error(err.stack)})
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
             this.client.fetchInvite(giveaway.serverlink).then(invite => {
                     let guildname = invite.guild.name;
