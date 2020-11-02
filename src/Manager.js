@@ -504,12 +504,13 @@ class GiveawaysManager extends EventEmitter {
             serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
             throw new Error(err.stack)
         }
-        if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
+      
+  if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
             giveaway.serverlink.forEach(function (invitelink) {
-                giveaway.message.client.fetchInvite(invitelink).then(invite => addserver(invite)).catch(err => adderror(err))
+                giveaway.message.client.fetchInvite(invitelink).then(function(invite) { addserver(invite) }).catch(function(err) { adderror(err) })
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            giveaway.message.client.fetchInvite(giveaway.serverlink).then(invite => addserver(invite)).catch(err => adderror(err))
+            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite) }).catch(function(err) { adderror(err) })
         }
         let roleslist = '';
         let c = 0;
