@@ -434,9 +434,9 @@ class GiveawaysManager extends EventEmitter {
         await giveaway.fetchMessage().catch(() => {})
         giveaway.serverslist = '';
         let linec = 0;
-        function addserver(invite, link) {
+        function addserver(invite) {
               let guildname = invite.guild.name;
-              giveaway.serverslist += (linec === 0 ? `📣 Must be in [${guildname}](${link}).` : `\n📣 Must be in [${guildname}](${link}).`)
+              giveaway.serverslist += (linec === 0 ? `📣 Must be in [${guildname}](https://discord.gg/${invite.code}).` : `\n📣 Must be in [${guildname}](https://discord.gg/${invite.code}).`)
               linec++
               return giveaway.serverslist && linec;
         }
@@ -446,10 +446,10 @@ class GiveawaysManager extends EventEmitter {
         }
   if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
             giveaway.serverlink.forEach(function (invitelink) {
-                giveaway.message.client.fetchInvite(invitelink).then( function(invite) { addserver(invite, invitelink) }).catch( function(err) { adderror(err) })
+                giveaway.message.client.fetchInvite(invitelink).then( function(invite) { addserver(invite) }).catch( function(err) { adderror(err) })
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite, giveaway.serverlink) }).catch(function(err) { adderror(err) })
+            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite) }).catch(function(err) { adderror(err) })
         }
     }
     _updateServerRequirement() {
@@ -460,9 +460,9 @@ class GiveawaysManager extends EventEmitter {
             await giveaway.fetchMessage().catch(() => {})
         giveaway.serverslist = ''
         let linec = 0;
-        function addserver(invite, link) {
+        function addserver(invite) {
               let guildname = invite.guild.name;
-              giveaway.serverslist += (linec === 0 ? `📣 Must be in [${guildname}](${link}).` : `\n📣 Must be in [${guildname}](${link}).`)
+              giveaway.serverslist += (linec === 0 ? `📣 Must be in [${guildname}](https://discord.gg/${invite.code}).` : `\n📣 Must be in [${guildname}](https://discord.gg/${invite.code}).`)
               linec++
               return giveaway.serverslist && linec;
         }
@@ -472,10 +472,10 @@ class GiveawaysManager extends EventEmitter {
         }
   if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
             giveaway.serverlink.forEach(function (invitelink) {
-                giveaway.message.client.fetchInvite(invitelink).then( function(invite) { addserver(invite, invitelink) }).catch( function(err) { adderror(err) })
+                giveaway.message.client.fetchInvite(invitelink).then( function(invite) { addserver(invite) }).catch( function(err) { adderror(err) })
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite, giveaway.serverlink.toString()) }).catch(function(err) { adderror(err) })
+            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite) }).catch(function(err) { adderror(err) })
         }
         })
     }
