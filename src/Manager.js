@@ -439,7 +439,7 @@ class GiveawaysManager extends EventEmitter {
               return giveaway.serverslist && linec;
         }
         function adderror(err) {
-            giveaway.serverslist += (linec === 0 ? `⚠️ Some of the server requirements doesn't work properly. Please make sure that i\'m in that server.` : `\n⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent nor i\'m in that server.`)
+            giveaway.serverslist += (linec === 0 ? `⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent nor i\'m in that server.` : `\n⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent nor i\'m in that server.`)
             return giveaway.serverslist;
         }
   if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
@@ -447,7 +447,7 @@ class GiveawaysManager extends EventEmitter {
                 giveaway.message.client.fetchInvite(invitelink).then( function(invite) { addserver(invite, invitelink) }).catch( function(err) { adderror(err) })
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite, invitelink) }).catch(function(err) { adderror(err) })
+            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite, giveaway.serverlink) }).catch(function(err) { adderror(err) })
         }
     }
     _updateServerRequirement() {
@@ -463,7 +463,7 @@ class GiveawaysManager extends EventEmitter {
               return giveaway.serverslist && linec;
         }
         function adderror(err) {
-            giveaway.serverslist += (linec === 0 ? `⚠️ Some of the server requirements doesn't work properly. Please make sure that i\'m in that server.` : `\n⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent nor i\'m in that server.`)
+            giveaway.serverslist += (linec === 0 ? `⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent nor i\'m in that server.` : `\n⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent nor i\'m in that server.`)
             return giveaway.serverslist;
         }
   if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
@@ -471,7 +471,7 @@ class GiveawaysManager extends EventEmitter {
                 giveaway.message.client.fetchInvite(invitelink).then( function(invite) { addserver(invite, invitelink) }).catch( function(err) { adderror(err) })
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite, invitelink) }).catch(function(err) { adderror(err) })
+            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite, giveaway.serverlink.toString()) }).catch(function(err) { adderror(err) })
         }
         })
     }
