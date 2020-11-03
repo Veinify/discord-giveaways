@@ -132,7 +132,6 @@ class Giveaway extends EventEmitter {
               this.serverreq = options.serverreq;
               this.serverlink = options.serverlink;
               this.serverslist = options.serverslist;
-              this.serversid = options.serversid;
     }
 
     /**
@@ -306,7 +305,6 @@ class Giveaway extends EventEmitter {
             serverreq: this.options.serverreq,
             serverlink: this.options.serverlink,
             serverslist: this.options.serverslist,
-            serversid: this.options.serversid,
         };
         return baseData;
     }
