@@ -172,33 +172,9 @@ class GiveawaysManager extends EventEmitter {
                 isdrop: options.isdrop,
                 serverreq: options.serverreq,
                 serverlink: options.serverlink,
-                serverslist: '',
+                serverslist: 'Loading...',
             });
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
-        let serverslist = 'Loading...';
-        let cc = 0;
-        /*let client = this.client;
-        if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
-            giveaway.serverlink.forEach(function (invitelink) {
-                client.fetchInvite(invitelink).then(invite => {
-                    let guildname = invite.guild.name;
-                    serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
-                    cc++
-                }).catch(err => {
-                    throw new Error(err.stack)
-                    serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')})
-                
-            }).catch(err => {
-                throw new Error(err.stack)})
-        } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            this.client.fetchInvite(giveaway.serverlink).then(invite => {
-                    let guildname = invite.guild.name;
-                    serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
-                    cc++
-                }).catch(err => {
-                    throw new Error(err.stack)
-                    serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')})
-        }*/
         let roleslist = '';
         let c = 0;
       if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
@@ -215,15 +191,13 @@ class GiveawaysManager extends EventEmitter {
                 .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }\n${options.messages.inviteToParticipate} \n\n${giveaway.serverreq === true ? serverslist : ''}\n${giveaway.rolereq === true ? roleslist : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
+                    }\n${options.messages.inviteToParticipate} \n\n${giveaway.serverreq === true ? giveaway.serverslist : ''}\n${giveaway.rolereq === true ? roleslist : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt);
             let message = await channel.send(options.isdrop ? options.messages.drop : options.messages.giveaway, { embed })
             roleslist = '';
             c = 0;
-            serverslist = '';
-            cc = 0;
             message.react(giveaway.reaction);
             giveaway.messageID = message.id;
             this.giveaways.push(giveaway);
@@ -426,29 +400,7 @@ class GiveawaysManager extends EventEmitter {
                 return;
             }
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
-        let serverslist = '';
-        let cc = 0;
-        if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
-            giveaway.serverlink.forEach(function (invitelink) {
-                giveaway.message.client.fetchInvite(invitelink).then(invite => {
-                    let guildname = invite.guild.name;
-                    serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
-                    cc++
-                }).catch(err => {
-                    serverslist += (cc === 0 ? '⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.' : '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.')
-                    throw new Error(err.stack)
-                })
-            })
-        } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            giveaway.message.client.fetchInvite(giveaway.serverlink).then(invite => {
-                    let guildname = invite.guild.name;
-                    serverslist += (cc === 0 ? `📣 Must be in [${guildname}](${invite}).` : `\n📣 Must be in [${guildname}](${invite}].`)
-                    cc++
-                }).catch(err => {
-                    serverslist += '\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.'
-                    throw new Error(err.stack)
-                })
-        }
+        updateServerRequirement(giveaway);
         let roleslist = '';
         let c = 0;
       if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
@@ -465,18 +417,61 @@ class GiveawaysManager extends EventEmitter {
                  .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${serverslist}\n${giveaway.rolereq === true ? roleslist : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
+                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${giveaway.serverreq ? giveaway.serverslist : ''}\n${giveaway.rolereq === true ? roleslist : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt)
             roleslist = '';
             c = 0;
-            serverslist = '';
-            cc = 0;
             giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
             if (giveaway.remainingTime < this.options.updateCountdownEvery) {
                 setTimeout(() => this.end.call(this, giveaway.messageID), giveaway.remainingTime);
             }
+    }
+    async updateServerRequirement(giveaway) {
+        await giveaway.fetchMessage().catch(() => {})
+        let linec = 0;
+        function addserver(invite, link) {
+              let guildname = invite.guild.name;
+              giveaway.serverslist += (linec === 0 ? `📣 Must be in [${guildname}](${link}).` : `\n📣 Must be in [${guildname}](${link}).`)
+              linec++
+              return giveaway.serverslist && linec;
+        }
+        function adderror(err) {
+            giveaway.serverslist += (linec === 0 ? `⚠️ Some of the server requirements doesn't work properly. Please make sure that i\'m in that server.` : `\n⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent nor i\'m in that server.`)
+            return giveaway.serverslist;
+        }
+  if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
+            giveaway.serverlink.forEach(function (invitelink) {
+                giveaway.message.client.fetchInvite(invitelink).then( function(invite) { addserver(invite, invitelink) }).catch( function(err) { adderror(err) })
+            })
+        } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
+            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite, invitelink) }).catch(function(err) { adderror(err) })
+        }
+    }
+    _updateServerRequirement() {
+        if (this.giveaways.length <= 0) return;
+        this.giveaways.forEach(async (giveaway) => {
+            await giveaway.fetchMessage().catch(() => {})
+        let linec = 0;
+        function addserver(invite, link) {
+              let guildname = invite.guild.name;
+              giveaway.serverslist += (linec === 0 ? `📣 Must be in [${guildname}](${link}).` : `\n📣 Must be in [${guildname}](${link}).`)
+              linec++
+              return giveaway.serverslist && linec;
+        }
+        function adderror(err) {
+            giveaway.serverslist += (linec === 0 ? `⚠️ Some of the server requirements doesn't work properly. Please make sure that i\'m in that server.` : `\n⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent nor i\'m in that server.`)
+            return giveaway.serverslist;
+        }
+  if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
+            giveaway.serverlink.forEach(function (invitelink) {
+                giveaway.message.client.fetchInvite(invitelink).then( function(invite) { addserver(invite, invitelink) }).catch( function(err) { adderror(err) })
+            })
+        } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
+            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite, invitelink) }).catch(function(err) { adderror(err) })
+        }
+        })
     }
     _checkGiveaway() {
         if (this.giveaways.length <= 0) return;
@@ -501,8 +496,7 @@ class GiveawaysManager extends EventEmitter {
               return giveaway.serverslist && linec;
         }
         function adderror(err) {
-            giveaway.serverslist += (cc === 0 ? `⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.` : `\n⚠️ Some of the server requirements are broken. Please make sure that i\'m in that server.`)
-            throw new Error(err.stack)
+            giveaway.serverslist += (linec === 0 ? `⚠️ Some of the server requirements doesn't work properly. Please make sure that i\'m in that server.` : `\n⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent nor i\'m in that server.`)
             return giveaway.serverslist;
         }
   if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
@@ -528,7 +522,7 @@ class GiveawaysManager extends EventEmitter {
                  .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${giveaway.serverslist}\n${giveaway.rolereq === true ? roleslist : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
+                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${giveaway.serverreq ? giveaway.serverslist : ''}\n${giveaway.rolereq === true ? roleslist : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt)
@@ -556,6 +550,9 @@ class GiveawaysManager extends EventEmitter {
         setInterval(() => {
             if (this.client.readyAt) this._checkGiveaway.call(this);
         }, this.options.updateCountdownEvery);
+        setInterval(() => {
+            if (this.client.readyAt) this._updateServerRequirement.call(this);
+        }, 60000)
         this.ready = true;
     }
 }
