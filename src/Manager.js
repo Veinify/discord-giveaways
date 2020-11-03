@@ -430,6 +430,7 @@ class GiveawaysManager extends EventEmitter {
     }
     async updateServerRequirement(giveaway) {
         await giveaway.fetchMessage().catch(() => {})
+        giveaway.serverslist = '';
         let linec = 0;
         function addserver(invite, link) {
               let guildname = invite.guild.name;
@@ -453,6 +454,7 @@ class GiveawaysManager extends EventEmitter {
         if (this.giveaways.length <= 0) return;
         this.giveaways.forEach(async (giveaway) => {
             await giveaway.fetchMessage().catch(() => {})
+        giveaway.serverslist = ''
         let linec = 0;
         function addserver(invite, link) {
               let guildname = invite.guild.name;
@@ -488,24 +490,6 @@ class GiveawaysManager extends EventEmitter {
                 return;
             }
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
-            let linec = 0;
-        function addserver(invite, link) {
-              let guildname = invite.guild.name;
-              giveaway.serverslist += (linec === 0 ? `📣 Must be in [${guildname}](${link}).` : `\n📣 Must be in [${guildname}](${link}).`)
-              linec++
-              return giveaway.serverslist && linec;
-        }
-        function adderror(err) {
-            giveaway.serverslist += (linec === 0 ? `⚠️ Some of the server requirements doesn't work properly. Please make sure that i\'m in that server.` : `\n⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent nor i\'m in that server.`)
-            return giveaway.serverslist;
-        }
-  if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
-            giveaway.serverlink.forEach(function (invitelink) {
-                giveaway.message.client.fetchInvite(invitelink).then( function(invite) { addserver(invite, invitelink) }).catch( function(err) { adderror(err) })
-            })
-        } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
-            giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite, invitelink) }).catch(function(err) { adderror(err) })
-        }
         let roleslist = '';
         let c = 0;
       if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
@@ -528,8 +512,6 @@ class GiveawaysManager extends EventEmitter {
                 .setTimestamp(giveaway.endAt)
             roleslist = '';
             c = 0;
-            giveaway.serverslist = '';
-            linec = 0;
             giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
             if (giveaway.remainingTime < this.options.updateCountdownEvery) {
                 setTimeout(() => this.end.call(this, giveaway.messageID), giveaway.remainingTime);
