@@ -532,9 +532,10 @@ class GiveawaysManager extends EventEmitter {
         setInterval(() => {
             if (this.client.readyAt) this._checkGiveaway.call(this);
         }, this.options.updateCountdownEvery);
+        if (this.client.readyAt) this._updateServerRequirement.call(this);
         setInterval(() => {
             if (this.client.readyAt) this._updateServerRequirement.call(this);
-        }, 60000)
+        }, 500000)
         this.ready = true;
     }
 }
