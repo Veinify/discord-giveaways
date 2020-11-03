@@ -400,7 +400,7 @@ class GiveawaysManager extends EventEmitter {
                 return;
             }
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
-        updateServerRequirement(giveaway);
+        await this.updateServerRequirement(giveaway);
         let roleslist = '';
         let c = 0;
       if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
