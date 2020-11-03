@@ -172,7 +172,7 @@ class GiveawaysManager extends EventEmitter {
                 isdrop: options.isdrop,
                 serverreq: options.serverreq,
                 serverlink: options.serverlink,
-                serverslist: 'Loading...',
+                serverslist: options.serverslist,
             });
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
         let roleslist = '';
@@ -429,6 +429,8 @@ class GiveawaysManager extends EventEmitter {
             }
     }
     async updateServerRequirement(giveaway) {
+        if (giveaway.ended) return;
+        if (!giveaway.channel) return;
         await giveaway.fetchMessage().catch(() => {})
         giveaway.serverslist = '';
         let linec = 0;
@@ -453,6 +455,8 @@ class GiveawaysManager extends EventEmitter {
     _updateServerRequirement() {
         if (this.giveaways.length <= 0) return;
         this.giveaways.forEach(async (giveaway) => {
+            if (giveaway.ended) return;
+            if (giveaway.channel) return;
             await giveaway.fetchMessage().catch(() => {})
         giveaway.serverslist = ''
         let linec = 0;
@@ -532,7 +536,9 @@ class GiveawaysManager extends EventEmitter {
         setInterval(() => {
             if (this.client.readyAt) this._checkGiveaway.call(this);
         }, this.options.updateCountdownEvery);
+        setTimeout(() => {
         if (this.client.readyAt) this._updateServerRequirement.call(this);
+        }, 10000)
         setInterval(() => {
             if (this.client.readyAt) this._updateServerRequirement.call(this);
         }, 500000)
