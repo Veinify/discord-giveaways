@@ -174,7 +174,7 @@ class GiveawaysManager extends EventEmitter {
                 serverlink: options.serverlink,
                 serverslist: options.serverslist,
             });
-            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.split(/\n/g).join('<br>').split(' ').join('#')}`
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.split(/\n/g).join('IbrI').split(' ').join('#')}`
         let roleslist = '';
         let c = 0;
       if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
@@ -399,7 +399,7 @@ class GiveawaysManager extends EventEmitter {
                 await this.editGiveaway(giveaway.messageID, giveaway.data);
                 return;
             }
-            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.split(/\n/g).join('<br>').split(' ').join('#')}`
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.split(/\n/g).join('IbrI').split(' ').join('#')}`
         await this.updateServerRequirement(giveaway);
         let roleslist = '';
         let c = 0;
@@ -495,7 +495,7 @@ class GiveawaysManager extends EventEmitter {
                 await this.editGiveaway(giveaway.messageID, giveaway.data);
                 return;
             }
-            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.split(/\n/g).join('<br>').split(' ').join('#')}`
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.split(/\n/g).join('IbrI').split(' ').join('#')}`
         let roleslist = '';
         let c = 0;
       if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
