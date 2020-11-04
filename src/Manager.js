@@ -174,7 +174,7 @@ class GiveawaysManager extends EventEmitter {
                 serverlink: options.serverlink,
                 serverslist: options.serverslist,
             });
-            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.replace(/  /g, '#')}`
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.split(' ').join('#')}`
         let roleslist = '';
         let c = 0;
       if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
@@ -191,7 +191,7 @@ class GiveawaysManager extends EventEmitter {
                 .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }\n${options.messages.inviteToParticipate} \n\n${giveaway.serverreq === true ? giveaway.serverslist : ''}\n${giveaway.rolereq === true ? roleslist : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
+                    }\n${options.messages.inviteToParticipate} \n\n${giveaway.serverreq === true ? `\n${giveaway.serverslist}` : ''}${giveaway.rolereq === true ? `\n${roleslist}` : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt);
@@ -399,7 +399,7 @@ class GiveawaysManager extends EventEmitter {
                 await this.editGiveaway(giveaway.messageID, giveaway.data);
                 return;
             }
-            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.replace(/ /g, '#')}`
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.split(' ').join('#')}`
         await this.updateServerRequirement(giveaway);
         let roleslist = '';
         let c = 0;
@@ -417,7 +417,7 @@ class GiveawaysManager extends EventEmitter {
                  .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${giveaway.serverreq ? giveaway.serverslist : ''}\n${giveaway.rolereq === true ? roleslist : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
+                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${giveaway.serverreq ? `\n${giveaway.serverslist}` : ''}${giveaway.rolereq === true ? `\n${roleslist}` : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt)
@@ -495,7 +495,7 @@ class GiveawaysManager extends EventEmitter {
                 await this.editGiveaway(giveaway.messageID, giveaway.data);
                 return;
             }
-            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.replace(/  /g, '#')}`
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.split(' ').join('#')}`
         let roleslist = '';
         let c = 0;
       if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
@@ -512,7 +512,7 @@ class GiveawaysManager extends EventEmitter {
                  .setDescription(
                     `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
-                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${giveaway.serverreq ? giveaway.serverslist : ''}\n${giveaway.rolereq === true ? roleslist : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
+                    }\n${giveaway.options.messages.inviteToParticipate} \n\n${giveaway.serverreq ? `\n${giveaway.serverslist}` : ''}${giveaway.rolereq === true ? `\n${roleslist}` : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt)
