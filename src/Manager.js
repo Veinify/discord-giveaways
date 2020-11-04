@@ -457,7 +457,7 @@ class GiveawaysManager extends EventEmitter {
         if (this.giveaways.length <= 0) return;
         this.giveaways.forEach(async (giveaway) => {
             if (giveaway.ended) return;
-            if (giveaway.channel) return;
+            if (!giveaway.channel) return;
             await giveaway.fetchMessage().catch(() => {})
         giveaway.serverslist = ''
         let linec = 0;
