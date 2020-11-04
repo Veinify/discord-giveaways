@@ -174,7 +174,7 @@ class GiveawaysManager extends EventEmitter {
                 serverlink: options.serverlink,
                 serverslist: options.serverslist,
             });
-            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.replace(/  /g, '#')}`
         let roleslist = '';
         let c = 0;
       if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
@@ -399,7 +399,7 @@ class GiveawaysManager extends EventEmitter {
                 await this.editGiveaway(giveaway.messageID, giveaway.data);
                 return;
             }
-            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.replace(/ /g, '#')}`
         await this.updateServerRequirement(giveaway);
         let roleslist = '';
         let c = 0;
@@ -495,7 +495,7 @@ class GiveawaysManager extends EventEmitter {
                 await this.editGiveaway(giveaway.messageID, giveaway.data);
                 return;
             }
-            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}`
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.replace(/  /g, '#')}`
         let roleslist = '';
         let c = 0;
       if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
@@ -541,7 +541,9 @@ class GiveawaysManager extends EventEmitter {
         setInterval(() => {
             if (this.client.readyAt) this._updateServerRequirement.call(this);
         }, 500000)
+        setTimeout(() => {
         if (this.client.readyAt) this._updateServerRequirement.call(this)
+        }, 10000)
         this.ready = true;
     }
 }
