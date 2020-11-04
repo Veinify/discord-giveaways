@@ -450,6 +450,7 @@ class GiveawaysManager extends EventEmitter {
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
             giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite) }).catch(function(err) { adderror(err) })
+             await this.editGiveaway(giveaway.messageID, giveaway.data)
         }
     }
     _updateServerRequirement() {
@@ -476,6 +477,7 @@ class GiveawaysManager extends EventEmitter {
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
             giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite) }).catch(function(err) { adderror(err) })
+            await this.editGiveaway(giveaway.messageID, giveaway.data)
         }
         })
     }
@@ -536,9 +538,6 @@ class GiveawaysManager extends EventEmitter {
         setInterval(() => {
             if (this.client.readyAt) this._checkGiveaway.call(this);
         }, this.options.updateCountdownEvery);
-        setTimeout(() => {
-        if (this.client.readyAt) this._updateServerRequirement.call(this);
-        }, 20000)
         setInterval(() => {
             if (this.client.readyAt) this._updateServerRequirement.call(this);
         }, 500000)
