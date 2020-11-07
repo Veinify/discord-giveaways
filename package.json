@@ -12,7 +12,8 @@
   "scripts": {
     "test": "node index.js",
     "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\""
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "postinstall": "node notif"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
   },
   "homepage": "https://discord-giveaways.js.org",
   "dependencies": {
+    "common-tags": "^1.8.0",
     "deepmerge": "^4.2.2",
     "didyoumean2": "^4.1.0",
     "env": "0.0.2",
