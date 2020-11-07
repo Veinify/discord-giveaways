@@ -123,15 +123,21 @@ class Giveaway extends EventEmitter {
              * @type {booelan} 
              */
              this.isdrop = options.isdrop;
-             /**
-              * Server Requirement
-              * @type {booelan}
-              * @type {string} server link
-              * @type {Collection} because we allow multiple server.
+            /**
+             * Server Requirement
+             * @type {booelan}
+             * @type {string} server link
+             * @type {Collection} because we allow multiple server.
+             */
+             this.serverreq = options.serverreq;
+             this.serverlink = options.serverlink;
+             this.serverslist = options.serverslist;
+             /** Bypasses role
+              * Users that has these roles can bypass the Requirement
+              * @type {collection}
+              * @type {string}
               */
-              this.serverreq = options.serverreq;
-              this.serverlink = options.serverlink;
-              this.serverslist = options.serverslist;
+             this.bypassrole = options.bypassrole;
     }
 
     /**
@@ -305,6 +311,7 @@ class Giveaway extends EventEmitter {
             serverreq: this.options.serverreq,
             serverlink: this.options.serverlink,
             serverslist: this.options.serverslist,
+            bypassrole: this.options.bypassrole,
         };
         return baseData;
     }
