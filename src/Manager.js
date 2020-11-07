@@ -184,7 +184,7 @@ class GiveawaysManager extends EventEmitter {
             cc++
         })
     } else if (Array.isArray(giveaway.bypassrole) && giveaway.bypassrole.length === 1) {
-        bypassroleslist += `📣 Users with <@&${giveaway.roleid}> role can bypass.`
+        bypassroleslist += `📣 Users with <@&${giveaway.bypassrole}> role can bypass.`
     }
         let roleslist = '';
         let c = 0;
@@ -422,7 +422,7 @@ class GiveawaysManager extends EventEmitter {
             cc++
         })
     } else if (Array.isArray(giveaway.bypassrole) && giveaway.bypassrole.length === 1) {
-        bypassroleslist += `📣 Users with <@&${giveaway.roleid}> role can bypass.`
+        bypassroleslist += `📣 Users with <@&${giveaway.bypassrole}> role can bypass.`
     }
         let roleslist = '';
         let c = 0;
@@ -529,7 +529,7 @@ class GiveawaysManager extends EventEmitter {
             cc++
         })
     } else if (Array.isArray(giveaway.bypassrole) && giveaway.bypassrole.length === 1) {
-        bypassroleslist += `📣 Users with <@&${giveaway.roleid}> role can bypass.`
+        bypassroleslist += `📣 Users with <@&${giveaway.bypassrole}> role can bypass.`
     }
         let roleslist = '';
         let c = 0;
