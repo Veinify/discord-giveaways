@@ -13,7 +13,7 @@
     "test": "node index.js",
     "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "postinstall": "node notif.js"
+    "postinstall": "echo $'******************************\nThis module is only specified for our project, if you still want to use it, you need to set things out yourself.\n******************************'"
   },
   "repository": {
     "type": "git",
