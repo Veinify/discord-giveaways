@@ -268,7 +268,7 @@ class Giveaway extends EventEmitter {
                     : this.messages.units.seconds;
         // Generates a first pattern
         let pattern =
-            (!isWeek ? '' : `{weeks} ${weekUnit}`) +
+            (!isWeek ? '' : `{weeks} ${weekUnit}, `) +
             (!isDay ? '' : `{days} ${dayUnit}, `) +
             (!isHour ? '' : `{hours} ${hourUnit}, `) +
             (!isMinute ? '' : `{minutes} ${minuteUnit}, `) +
