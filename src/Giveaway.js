@@ -247,7 +247,7 @@ class Giveaway extends EventEmitter {
             isDay = days > 0,
             isHour = hours > 0,
             isMinute = minutes > 0;
-        let weekUnit = weeks < 2 && (this.message.units.pluralS || this.messages.units.weeks.endsWith('s'))
+        let weekUnit = weeks < 2 && (this.messages.units.pluralS || this.messages.units.weeks.endsWith('s'))
                     ? this.messages.units.weeks.substr(0, this.messages.units.weeks.length -1 )
                     : this.messages.units.weeks,
             dayUnit =
