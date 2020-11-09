@@ -235,7 +235,7 @@ class Giveaway extends EventEmitter {
     get content() {
         let roundTowardsZero = this.remainingTime > 0 ? Math.floor : Math.ceil;
         // Gets weeks, days, hours, minutes and seconds
-        let weeks = roundTowardsZero(this.remainingTime / 2628002880),
+        let weeks = roundTowardsZero(this.remainingTime / 604800000),
             days = roundTowardsZero(this.remainingTime / 86400000) % 7,
             hours = roundTowardsZero(this.remainingTime / 3600000) % 24,
             minutes = roundTowardsZero(this.remainingTime / 60000) % 60,
