@@ -234,18 +234,23 @@ class Giveaway extends EventEmitter {
      */
     get content() {
         let roundTowardsZero = this.remainingTime > 0 ? Math.floor : Math.ceil;
-        // Gets days, hours, minutes and seconds
-        let days = roundTowardsZero(this.remainingTime / 86400000),
+        // Gets weeks, days, hours, minutes and seconds
+        let weeks = roundTowardsZero(this.remainingTime / 2628002880),
+            days = roundTowardsZero(this.remainingTime / 86400000) % 7,
             hours = roundTowardsZero(this.remainingTime / 3600000) % 24,
             minutes = roundTowardsZero(this.remainingTime / 60000) % 60,
             seconds = roundTowardsZero(this.remainingTime / 1000) % 60;
         // Increment seconds if equal to zero
         if (seconds === 0) seconds++;
         // Whether values are inferior to zero
-        let isDay = days > 0,
+        let isWeek = weeks > 0,
+            isDay = days > 0,
             isHour = hours > 0,
             isMinute = minutes > 0;
-        let dayUnit =
+        let weekUnit = weeks < 2 && (this.message.units.pluralS || this.messages.units.weeks.endsWith('s'))
+                    ? this.messages.units.weeks.substr(0, this.messages.units.weeks.length -1 )
+                    : this.messages.units.weeks,
+            dayUnit =
                 days < 2 && (this.messages.units.pluralS || this.messages.units.days.endsWith('s'))
                     ? this.messages.units.days.substr(0, this.messages.units.days.length - 1)
                     : this.messages.units.days,
@@ -263,6 +268,7 @@ class Giveaway extends EventEmitter {
                     : this.messages.units.seconds;
         // Generates a first pattern
         let pattern =
+            (!isWeek ? '' : `{weeks} ${weekUnit}`) +
             (!isDay ? '' : `{days} ${dayUnit}, `) +
             (!isHour ? '' : `{hours} ${hourUnit}, `) +
             (!isMinute ? '' : `{minutes} ${minuteUnit}, `) +
@@ -270,6 +276,7 @@ class Giveaway extends EventEmitter {
         // Format the pattern with the right values
         let content = this.messages.timeRemaining
             .replace('{duration}', pattern)
+            .replace('{weeks}', weeks.toString())
             .replace('{days}', days.toString())
             .replace('{hours}', hours.toString())
             .replace('{minutes}', minutes.toString())
