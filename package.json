@@ -13,7 +13,7 @@
     "test": "node index.js",
     "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "postinstall": "node ./bin/postinstall || exit 0"
+    "postinstall": "node ./bin/postinstall.js || exit 0"
   },
   "repository": {
     "type": "git",
