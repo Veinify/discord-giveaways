@@ -461,12 +461,12 @@ class GiveawaysManager extends EventEmitter {
         let linec = 0;
         function addserver(invite) {
               let guildname = invite.guild.name;
-              giveaway.serverslist += (linec === 0 ? `📣 Must be in [${guildname}](https://discord.gg/${invite.code}).` : `\n📣 Must be in [${guildname}](https://discord.gg/${invite.code}).`)
+              giveaway.serverslist += (linec === 0 ? `⚠️ Should be in [${guildname}](https://discord.gg/${invite.code}).` : `\n⚠️ Should be in [${guildname}](https://discord.gg/${invite.code}).`)
               linec++
               return giveaway.serverslist && linec;
         }
         function adderror(err) {
-            giveaway.serverslist += (linec === 0 ? `⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent nor i\'m in that server.` : `\n⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent nor i\'m in that server.`)
+            giveaway.serverslist += (linec === 0 ? `⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent.` : `\n⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent.`)
             return giveaway.serverslist;
         }
   if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
@@ -488,12 +488,12 @@ class GiveawaysManager extends EventEmitter {
         let linec = 0;
         function addserver(invite) {
               let guildname = invite.guild.name;
-              giveaway.serverslist += (linec === 0 ? `📣 Must be in [${guildname}](https://discord.gg/${invite.code}).` : `\n📣 Must be in [${guildname}](https://discord.gg/${invite.code}).`)
+              giveaway.serverslist += (linec === 0 ? `⚠️ Should be in [${guildname}](https://discord.gg/${invite.code}).` : `\n⚠️ Should be in [${guildname}](https://discord.gg/${invite.code}).`)
               linec++
               return giveaway.serverslist && linec;
         }
         function adderror(err) {
-            giveaway.serverslist += (linec === 0 ? `⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent nor i\'m in that server.` : `\n⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent nor i\'m in that server.`)
+            giveaway.serverslist += (linec === 0 ? `⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent.` : `\n⚠️ Some of the server requirements doesn't work properly. Please make sure that the invite links are permanent.`)
             return giveaway.serverslist;
         }
   if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length > 1) {
