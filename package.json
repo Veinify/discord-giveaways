@@ -51,6 +51,6 @@
     "typescript": "^3.9.3"
   },
   "bin": {
-    "Veinify-discord-giveaways": "postinstall.js"
+    "Veinify-discord-giveaways": "bin/postinstall.js"
   }
 }

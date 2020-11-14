@@ -1,1 +1,1 @@
-console.log('\u001b[31m******************************\n\u001b[1m\u001b[32mThis module is only specified for our project, if you still want to use it, you need to set things out yourself.\u001b[0m\n\u001b[31m******************************');
+console.log('\u001b[31m******************************\n\u001b[1m\u001b[32mThis module is only specified for our project, if you still want to use it, you need to set things out yourself.\u001b[0m\n\u001b[31m******************************\u001b[0m');
