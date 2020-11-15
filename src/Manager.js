@@ -477,8 +477,8 @@ class GiveawaysManager extends EventEmitter {
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
             giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite) }).catch(function(err) { adderror(err) })
-             await this.editGiveaway(giveaway.messageID, giveaway.data)
         }
+        await this.editGiveaway(giveaway.messageID, giveaway.data)
     }
     _updateServerRequirement() {
         if (this.giveaways.length <= 0) return;
@@ -504,8 +504,8 @@ class GiveawaysManager extends EventEmitter {
             })
         } else if (Array.isArray(giveaway.serverlink) && giveaway.serverlink.length === 1) {
             giveaway.message.client.fetchInvite(giveaway.serverlink).then(function(invite) { addserver(invite) }).catch(function(err) { adderror(err) })
-            await this.editGiveaway(giveaway.messageID, giveaway.data)
         }
+        await this.editGiveaway(giveaway.messageID, giveaway.data)
         })
     }
     _checkGiveaway() {
