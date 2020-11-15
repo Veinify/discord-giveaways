@@ -173,7 +173,9 @@ class GiveawaysManager extends EventEmitter {
                 serverreq: options.serverreq,
                 serverlink: options.serverlink,
                 serverslist: options.serverslist,
-                bypassrole: options.bypassrole
+                bypassrole: options.bypassrole,
+                giveawayMessageWinner: options.giveawayMessageWinner,
+                winnerRole: options.winnerRole
             });
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.split(/\n/g).join('IbrI').split(' ').join('#')}`
         let bypassroleslist = '';

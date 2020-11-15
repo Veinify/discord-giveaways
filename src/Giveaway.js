@@ -138,6 +138,15 @@ class Giveaway extends EventEmitter {
               * @type {string}
               */
              this.bypassrole = options.bypassrole;
+             /** Send a messge to a winner from the giveaway host
+              * @type {string}
+              */
+              this.giveawayMessageWinner = options.giveawayMessageWinner
+              /** Gave a role to the winner
+               * @type {snowflake}
+               * @type {collection}
+               */
+               this.winnerRole = options.winnerRole
     }
 
     /**
@@ -319,6 +328,8 @@ class Giveaway extends EventEmitter {
             serverlink: this.options.serverlink,
             serverslist: this.options.serverslist,
             bypassrole: this.options.bypassrole,
+            giveawayMessageWinner: this.options.giveawayMessageWinner,
+            winnerRole: this.options.winnerRole,
         };
         return baseData;
     }
