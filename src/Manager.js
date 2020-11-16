@@ -522,6 +522,7 @@ class GiveawaysManager extends EventEmitter {
             giveaway.threeSecondsRemaining2 = true;
             await this.editGiveaway(giveaway.messageID, giveaway.data)
             let threeSeconds = 3;
+            function embed() {
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.split(/\n/g).join('IbrI').split(' ').join('#')}`
         let bypassroleslist = '';
         let cc = 0;
@@ -544,26 +545,28 @@ class GiveawaysManager extends EventEmitter {
         roleslist += `📣 Must have the <@&${giveaway.roleid}> role.`
     }
             let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
-            (this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? embed.setColor(this.options.default.lastChance.lastEmbedColor) : embed.setColor(giveaway.embedColor))
             embed
+                 .setColor('RED')
                  .setDescription(
-                    `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\nTime Left: ${threeSeconds} ${(threeSeconds > 1) ? 'seconds' : 'second'}\nLive Timer: [Click Here!](${timerwebsite})\n${
+                    `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\nTime remaining: ${threeSeconds} ${(threeSeconds > 1) ? 'seconds' : 'second'}!\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
                     }\n${giveaway.options.messages.inviteToParticipate} \n\n\n${bypassroleslist}${giveaway.serverreq ? `\n${giveaway.serverslist}` : ''}${giveaway.rolereq === true ? `\n${roleslist}` : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt)
+            return embed;
+            )
             roleslist = '';
             c = 0;
             bypassroleslist = '';
             cc = 0;
-        giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
+        giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed() });
         await wait(1000)
         threeSeconds -= 1
-        giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
+        giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed() });
         await wait(1000)
         threeSeconds -= 1
-        giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
+        giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed() });
         await wait(1000)
         this.end.call(this, giveaway.messageID)
         //await this.editGiveaway(giveaway.messageID, giveaway.data)
