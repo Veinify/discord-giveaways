@@ -53,6 +53,12 @@ class Giveaway extends EventEmitter {
          */
         this.channelID = options.channelID;
         /**
+         * If the giveaway duration is less tham 3 seconds
+         * @type ${booelan}
+         */
+        this.threeSecondsRemaining = options.threeSecondsRemaining;
+        this.threeSecondsRemaining2 = options.threeSecondsRemaining2;
+        /**
          * The message ID of the giveaway
          * @type {Discord.Snowflake?}
          */
@@ -305,6 +311,8 @@ class Giveaway extends EventEmitter {
             startAt: this.startAt,
             endAt: this.endAt,
             ended: this.ended,
+            threeSecondsRemaining: this.threeSecondsRemaining,
+            threeSecondsRemaining2: this.threeSecondsRemaining2,
             winnerCount: this.winnerCount,
             prize: this.prize,
             messages: this.messages,

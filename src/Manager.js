@@ -8,6 +8,7 @@ const readFileAsync = promisify(readFile);
 const ms = require("ms");
 const pms = require('pretty-ms');
 const Discord = require('discord.js');
+const wait = promisify((a, f) => setTimeout(f, a));
 const {
     defaultGiveawayMessages,
     defaultManagerOptions,
@@ -152,6 +153,8 @@ class GiveawaysManager extends EventEmitter {
                 channelID: channel.id,
                 guildID: channel.guild.id,
                 ended: false,
+                threeSecondsRemaining: false,
+                threeSecondsRemaining2: false,
                 prize: options.prize,
                 hostedBy: options.hostedBy ? options.hostedBy.toString() : null,
                 messages: options.messages,
@@ -508,10 +511,65 @@ class GiveawaysManager extends EventEmitter {
         await this.editGiveaway(giveaway.messageID, giveaway.data)
         })
     }
+    async lastGiveaway() {
+        if (this.giveaways.length <= 0) return;
+        this.giveaways.forEach(async (giveaway) => {
+        if (giveaway.ended) return;
+        await giveaway.fetchMessage().catch(() => {});
+        if (!giveaway.message) return;
+        if (giveaway.threeSecondsRemaining && !giveaway.threeSecondsRemaining2) {
+            giveaway.threeSecondsRemaining2 = true;
+            let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.split(/\n/g).join('IbrI').split(' ').join('#')}`
+        let bypassroleslist = '';
+        let cc = 0;
+      if (Array.isArray(giveaway.bypassrole) && giveaway.bypassrole.length > 1) {
+        giveaway.bypassrole.forEach(function(role) {
+            bypassroleslist += (c === 0 ? `📣 Users with <@&${role}> role can bypass.` : `\n📣 Users with <@&${role}> role can bypass.`)
+            cc++
+        })
+    } else if (Array.isArray(giveaway.bypassrole) && giveaway.bypassrole.length === 1) {
+        bypassroleslist += `📣 Users with <@&${giveaway.bypassrole}> role can bypass.`
+    }
+        let roleslist = '';
+        let c = 0;
+      if (Array.isArray(giveaway.roleid) && giveaway.roleid.length > 1) {
+        giveaway.roleid.forEach(function(role) {
+            roleslist += (c === 0 ? `📣 Must have the <@&${role}> role.` : `\n📣 Must have the <@&${role}> role.`)
+            c++
+        })
+    } else if (Array.isArray(giveaway.roleid) && giveaway.roleid.length === 1) {
+        roleslist += `📣 Must have the <@&${giveaway.roleid}> role.`
+    }
+            let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
+            (this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? embed.setColor(this.options.default.lastChance.lastEmbedColor) : embed.setColor(giveaway.embedColor))
+            embed
+                 .setDescription(
+                    `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
+                        giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
+                    }\n${giveaway.options.messages.inviteToParticipate} \n\n\n${bypassroleslist}${giveaway.serverreq ? `\n${giveaway.serverslist}` : ''}${giveaway.rolereq === true ? `\n${roleslist}` : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
+                )
+                .setFooter('Ended At:')
+                .setTimestamp(giveaway.endAt)
+            roleslist = '';
+            c = 0;
+            bypassroleslist = '';
+            cc = 0;
+        giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
+        await wait(1000)
+        giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
+        await wait(1000)
+        giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
+        await wait(1000)
+        this.end.call(this, giveaway.messageID)
+        //await this.editGiveaway(giveaway.messageID, giveaway.data)
+        }
+        })
+    }
     _checkGiveaway() {
         if (this.giveaways.length <= 0) return;
         this.giveaways.forEach(async (giveaway) => {
             if (giveaway.ended) return;
+            if (giveaway.threeSecondsRemaining) return;
             if (!giveaway.channel) return;
             if (giveaway.remainingTime <= 0) {
                 return this.end(giveaway.messageID).catch(() => {});
@@ -574,6 +632,9 @@ class GiveawaysManager extends EventEmitter {
         rawGiveaways.forEach((giveaway) => {
             this.giveaways.push(new Giveaway(this, giveaway));
         });
+        setInterval(() => {
+            if (this.client.readyAt) lastGiveaway();
+        }, 1000)
         setInterval(() => {
             if (this.client.readyAt) this._checkGiveaway.call(this);
         }, this.options.updateCountdownEvery);
