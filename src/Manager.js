@@ -516,11 +516,12 @@ class GiveawaysManager extends EventEmitter {
         this.giveaways.forEach(async (giveaway) => {
         if (giveaway.ended) return;
         await giveaway.fetchMessage().catch(() => {});
-        if (giveaway.remainingTime <= 3000) giveaway.threeSecondsRemaining = true
+        if (giveaway.remainingTime < 4000) giveaway.threeSecondsRemaining = true
         if (!giveaway.message) return;
         if (giveaway.threeSecondsRemaining && !giveaway.threeSecondsRemaining2) {
             giveaway.threeSecondsRemaining2 = true;
-            await this.editGiveaway(giveaway.messageID, giveaway.data) 
+            await this.editGiveaway(giveaway.messageID, giveaway.data)
+            let threeSeconds = 3;
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.split(/\n/g).join('IbrI').split(' ').join('#')}`
         let bypassroleslist = '';
         let cc = 0;
@@ -546,7 +547,7 @@ class GiveawaysManager extends EventEmitter {
             (this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? embed.setColor(this.options.default.lastChance.lastEmbedColor) : embed.setColor(giveaway.embedColor))
             embed
                  .setDescription(
-                    `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n${giveaway.content}\nLive Timer: [Click Here!](${timerwebsite})\n${
+                    `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\nTime Left: ${threeSeconds} ${(threeSeconds > 1) ? 'seconds' : 'second'}\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
                     }\n${giveaway.options.messages.inviteToParticipate} \n\n\n${bypassroleslist}${giveaway.serverreq ? `\n${giveaway.serverslist}` : ''}${giveaway.rolereq === true ? `\n${roleslist}` : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
                 )
@@ -558,8 +559,10 @@ class GiveawaysManager extends EventEmitter {
             cc = 0;
         giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
         await wait(1000)
+        threeSeconds -= 1
         giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
         await wait(1000)
+        threeSeconds -= 1
         giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
         await wait(1000)
         this.end.call(this, giveaway.messageID)
