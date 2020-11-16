@@ -633,7 +633,7 @@ class GiveawaysManager extends EventEmitter {
             this.giveaways.push(new Giveaway(this, giveaway));
         });
         setInterval(() => {
-            if (this.client.readyAt) lastGiveaway();
+            if (this.client.readyAt) this.lastGiveaway();
         }, 1000)
         setInterval(() => {
             if (this.client.readyAt) this._checkGiveaway.call(this);
