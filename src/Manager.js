@@ -579,6 +579,7 @@ class GiveawaysManager extends EventEmitter {
             if (giveaway.ended) return;
             if (giveaway.threeSecondsRemaining) return;
             if (!giveaway.channel) return;
+            if (giveaway.remainingTime < 10000) return;
             if (giveaway.remainingTime <= 0) {
                 return this.end(giveaway.messageID).catch(() => {});
             }
@@ -624,9 +625,9 @@ class GiveawaysManager extends EventEmitter {
             bypassroleslist = '';
             cc = 0;
             giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), { embed });
-            if (giveaway.remainingTime < this.options.updateCountdownEvery) {
+           /* if (giveaway.remainingTime < this.options.updateCountdownEvery) {
                 setTimeout(() => this.end.call(this, giveaway.messageID), giveaway.remainingTime);
-            }
+            }*/
         });
     }
 
