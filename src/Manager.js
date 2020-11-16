@@ -516,10 +516,11 @@ class GiveawaysManager extends EventEmitter {
         this.giveaways.forEach(async (giveaway) => {
         if (giveaway.ended) return;
         await giveaway.fetchMessage().catch(() => {});
-        if (giveaway.remainingTime < 3000) giveaway.threeSecondsRemaining = true
+        if (giveaway.remainingTime <= 3000) giveaway.threeSecondsRemaining = true
         if (!giveaway.message) return;
         if (giveaway.threeSecondsRemaining && !giveaway.threeSecondsRemaining2) {
             giveaway.threeSecondsRemaining2 = true;
+            await this.editGiveaway(giveaway.messageID, giveaway.data) 
             let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${giveaway.prize.split(/\n/g).join('IbrI').split(' ').join('#')}`
         let bypassroleslist = '';
         let cc = 0;
