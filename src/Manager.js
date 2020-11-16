@@ -515,6 +515,9 @@ class GiveawaysManager extends EventEmitter {
         if (this.giveaways.length <= 0) return;
         this.giveaways.forEach(async (giveaway) => {
         if (giveaway.ended) return;
+        if (giveaway.remainingTime <= 0) {
+            return this.end(giveaway.messageID).catch(() => {});
+        }
         await giveaway.fetchMessage().catch(() => {});
         if (giveaway.remainingTime < 4000) giveaway.threeSecondsRemaining = true
         if (!giveaway.message) return;
@@ -579,7 +582,7 @@ class GiveawaysManager extends EventEmitter {
             if (giveaway.ended) return;
             if (giveaway.threeSecondsRemaining) return;
             if (!giveaway.channel) return;
-            if (giveaway.remainingTime < 10000) return;
+            if (giveaway.remainingTime < 5000) return;
             if (giveaway.remainingTime <= 0) {
                 return this.end(giveaway.messageID).catch(() => {});
             }
