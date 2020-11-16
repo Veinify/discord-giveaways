@@ -516,6 +516,7 @@ class GiveawaysManager extends EventEmitter {
         this.giveaways.forEach(async (giveaway) => {
         if (giveaway.ended) return;
         await giveaway.fetchMessage().catch(() => {});
+        if (giveaway.remainingTime < 3000) giveaway.threeSecondsRemaining = true
         if (!giveaway.message) return;
         if (giveaway.threeSecondsRemaining && !giveaway.threeSecondsRemaining2) {
             giveaway.threeSecondsRemaining2 = true;
