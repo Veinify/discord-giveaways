@@ -554,12 +554,12 @@ class GiveawaysManager extends EventEmitter {
                 )
                 .setFooter('Ended At:')
                 .setTimestamp(giveaway.endAt)
-            return embed;
-            }
             roleslist = '';
             c = 0;
             bypassroleslist = '';
             cc = 0;
+            return embed;
+            }
         giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), embed());
         await wait(1000)
         threeSeconds -= 1
