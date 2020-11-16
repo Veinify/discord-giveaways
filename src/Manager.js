@@ -544,7 +544,7 @@ class GiveawaysManager extends EventEmitter {
     } else if (Array.isArray(giveaway.roleid) && giveaway.roleid.length === 1) {
         roleslist += `📣 Must have the <@&${giveaway.roleid}> role.`
     }
-            let embed = this.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
+            let embed = new Discord.MessageEmbed();
             embed
                  .setColor('RED')
                  .setDescription(
