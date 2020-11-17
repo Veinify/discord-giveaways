@@ -551,7 +551,7 @@ class GiveawaysManager extends EventEmitter {
             embed
                  .setColor('RED')
                  .setDescription(
-                    `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\nTime remaining: ${threeSeconds} ${(threeSeconds > 1) ? 'seconds' : 'second'}!\nLive Timer: [Click Here!](${timerwebsite})\n${
+                    `🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n**Time remaining: ${threeSeconds} ${(threeSeconds > 1) ? 'seconds' : 'second'}**!\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
                     }\n${giveaway.options.messages.inviteToParticipate} \n\n\n${bypassroleslist}${giveaway.serverreq ? `\n${giveaway.serverslist}` : ''}${giveaway.rolereq === true ? `\n${roleslist}` : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
                 )
@@ -571,6 +571,8 @@ class GiveawaysManager extends EventEmitter {
         threeSeconds -= 1
         giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), embed());
         await wait(1000)
+        threeSeconds -= 1
+        giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), embed());
         this.end.call(this, giveaway.messageID)
         //await this.editGiveaway(giveaway.messageID, giveaway.data)
         }
