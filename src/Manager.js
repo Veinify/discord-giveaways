@@ -459,8 +459,12 @@ class GiveawaysManager extends EventEmitter {
             }
     }
     async updateServerRequirement(giveaway) {
-        if (giveaway.ended) return;
-        if (!giveaway.channel) return;
+        if (!giveaway) return;
+            if (giveaway.ended) return;
+            if (!giveaway.channel) return;
+            if (giveaway.remainingTime <= 0) {
+                return this.end(giveaway.messageID).catch(() => {});
+            }
         await giveaway.fetchMessage().catch(() => {})
         giveaway.serverslist = '';
         let linec = 0;
@@ -514,10 +518,12 @@ class GiveawaysManager extends EventEmitter {
     async lastGiveaway() {
         if (this.giveaways.length <= 0) return;
         this.giveaways.forEach(async (giveaway) => {
-        if (giveaway.ended) return;
-        if (giveaway.remainingTime <= 0) {
-            return this.end(giveaway.messageID).catch(() => {});
-        }
+        if (!giveaway) return;
+            if (giveaway.ended) return;
+            if (!giveaway.channel) return;
+            if (giveaway.remainingTime <= 0) {
+                return this.end(giveaway.messageID).catch(() => {});
+            }
         await giveaway.fetchMessage().catch(() => {});
         if (giveaway.remainingTime < 4000) giveaway.threeSecondsRemaining = true
         if (!giveaway.message) return;
