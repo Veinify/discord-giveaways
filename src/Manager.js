@@ -596,9 +596,9 @@ class GiveawaysManager extends EventEmitter {
             if (giveaway.ended) return;
             if (giveaway.threeSecondsRemaining) return;
             if (!giveaway.channel) return;
-            if (giveaway.remainingTime < 5000) return;
             if (giveaway.remainingTime <= 0) {
                 return this.end(giveaway.messageID).catch(() => {});
+            if (giveaway.remainingTime < 5000) return;
             }
             await giveaway.fetchMessage().catch(() => {});
             if (!giveaway.message) {
