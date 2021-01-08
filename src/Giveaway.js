@@ -455,6 +455,7 @@ class Giveaway extends EventEmitter {
             }
             let winners = await this.roll();
             let entries = await this.ValidEntry();
+            let winChance = ((100 * this.winnerCount) / entries).toFixed(10)
             this.manager.emit('giveawayEnded', this, winners);
             this.manager.editGiveaway(this.messageID, this.data);
             if (winners.length > 0) {
@@ -464,14 +465,13 @@ class Giveaway extends EventEmitter {
                     this.messages.winners.substr(1, this.messages.winners.length) +
                     ': ' +
                     formattedWinners;
-                 let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${this.startAt}&ended=${this.endAt}`
                 let embed = this.manager.v12 ? new Discord.MessageEmbed() : new Discord.RichEmbed();
                 embed
                     .setColor(this.embedColorEnd)
                     .setFooter(this.messages.endedAt)
                     .setDescription(`🎁 • **${this.prize}**\n🏅 • ${str}\n🏆 • ${
                         this.hostedBy ? this.messages.hostedBy.replace('{user}', this.hostedBy) : ''
-                    }\n🎊 • Total Participants: **${entries}**`)
+                    }\n🎊 • Total Participants: **${entries}**\n🎲 • Winning Chances: **${winChance}%**`)
                     .setTimestamp(new Date(this.endAt).toISOString());
                 let endembed = new Discord.MessageEmbed()
                 .setColor(this.embedColorEnd)
