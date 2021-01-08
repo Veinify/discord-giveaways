@@ -455,7 +455,7 @@ class Giveaway extends EventEmitter {
             }
             let winners = await this.roll();
             let entries = await this.ValidEntry();
-            let winChance = (((100 * this.winnerCount) / entries).toFixed(5)).toString();
+            let winChance = parseFloat(((100 * this.winnerCount) / entries).toFixed(5));
             this.manager.emit('giveawayEnded', this, winners);
             this.manager.editGiveaway(this.messageID, this.data);
             if (winners.length > 0) {
