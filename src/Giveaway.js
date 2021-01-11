@@ -540,6 +540,7 @@ class Giveaway extends EventEmitter {
 				);
 			}
 			let winners = await this.roll();
+			let entries = await this.ValidEntry();
 			let chance = await this.winningChance;
 			this.manager.emit('giveawayEnded', this, winners);
 			this.manager.editGiveaway(this.messageID, this.data);
