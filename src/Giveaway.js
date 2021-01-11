@@ -148,7 +148,7 @@ class Giveaway extends EventEmitter {
 		 * @type {string}
 		 */
 		this.giveawayMessageWinner = options.giveawayMessageWinner;
-		/** Gave a role to the winner
+		/** Give a role to the winner
 		 * @type {snowflake}
 		 * @type {collection}
 		 */
@@ -433,6 +433,12 @@ class Giveaway extends EventEmitter {
 		).filter(u => u.id !== this.message.client.user.id).size;
 		return users;
 	}
+	async winningChance() {
+		let entries = await this.ValidEntry();
+		let winChance = parseFloat(((100 * this.winnerCount) / entries).toFixed(5));
+		if (entries === 0 || winChance > 100) winChance = 100;
+		return `${winChance}%`;
+	}
 	async roll(winnerCount) {
 		if (!this.message) return [];
 		// Pick the winner
@@ -534,11 +540,7 @@ class Giveaway extends EventEmitter {
 				);
 			}
 			let winners = await this.roll();
-			let entries = await this.ValidEntry();
-			let winChance = parseFloat(
-				((100 * this.winnerCount) / entries).toFixed(5)
-			);
-			if (winChance > 100) winChance = 100;
+			let chance = await this.winningChance;
 			this.manager.emit('giveawayEnded', this, winners);
 			this.manager.editGiveaway(this.messageID, this.data);
 			if (winners.length > 0) {
@@ -559,7 +561,7 @@ class Giveaway extends EventEmitter {
 							this.hostedBy
 								? this.messages.hostedBy.replace('{user}', this.hostedBy)
 								: ''
-						}\n🎊 • Total Participants: **${entries}**\n🎲 • Winning Chances: **${winChance}%**`
+						}\n🎊 • Total Participants: **${entries}**\n🎲 • Winning Chances: **${chance}**`
 					)
 					.setTimestamp(new Date(this.endAt).toISOString());
 				let endembed = new Discord.MessageEmbed()
