@@ -577,7 +577,7 @@ class GiveawaysManager extends EventEmitter {
 				await this.editGiveaway(giveaway.messageID, giveaway.data)
 				let threeSeconds = 3;
 
-				async function embed() {
+				let embed = async () => {
 					let chance = await giveaway.winningChance();
 					let timerwebsite = `https://aestetikmod.mirzabhakti.repl.co/timer/?started=${giveaway.startAt}&ended=${giveaway.endAt}&prize=${encodePrize(giveaway.prize)}`
 					let bypassroleslist = '';
@@ -602,7 +602,7 @@ class GiveawaysManager extends EventEmitter {
 					else if (Array.isArray(giveaway.roleid) && giveaway.roleid.length === 1) {
 						roleslist += `📣 Must have the <@&${giveaway.roleid}> role.`
 					}
-					let embed = new Discord.MessageEmbed();
+					let gembed = new Discord.MessageEmbed();
 					embed
 						.setColor('RED')
 						.setDescription(
@@ -616,7 +616,7 @@ class GiveawaysManager extends EventEmitter {
 					c = 0;
 					bypassroleslist = '';
 					cc = 0;
-					return embed;
+					return gembed;
 				}
 				if (!giveaway.ended) giveaway.message.edit((this.options.default.lastChance.enabled && giveaway.remainingTime < this.options.default.lastChance.secondsBeforeLastChance ? this.options.default.lastChance.title : giveaway.isdrop ? giveaway.messages.drop : giveaway.messages.giveaway), embed());
 				await wait(1000)
