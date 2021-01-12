@@ -606,7 +606,7 @@ class GiveawaysManager extends EventEmitter {
 					embed
 						.setColor('RED')
 						.setDescription(
-							`🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n\n🎲 • Winning Chances: **${chance}**\n**Time remaining: ${threeSeconds} ${(threeSeconds > 1) ? 'seconds' : 'second'}**!\nLive Timer: [Click Here!](${timerwebsite})\n${
+							`🎁 • ${giveaway.prize}\n🏅 • ${giveaway.messages.winners}: ${giveaway.winnerCount}\n🎲 • Winning Chances: **${chance}**\n**Time remaining: ${threeSeconds} ${(threeSeconds > 1) ? 'seconds' : 'second'}**!\nLive Timer: [Click Here!](${timerwebsite})\n${
                         giveaway.hostedBy ? giveaway.messages.hostedBy.replace('{user}', giveaway.hostedBy) : ''
                     }\n${giveaway.options.messages.inviteToParticipate} \n\n\n${bypassroleslist}${giveaway.serverreq ? `\n${giveaway.serverslist}` : ''}${giveaway.rolereq === true ? `\n${roleslist}` : ''}${giveaway.joinedreq === true ? `\n📣 Must have been in this server for atleast **${pms(giveaway.joinedtime, {verbose: true})}**.` : ''}${giveaway.agereq === true ? `\n📣 Your account age must be older than **${pms(giveaway.agetime, {verbose: true})}**.` : ''}${giveaway.messagereq === true ? `\n📣 You need to send **${giveaway.messageamount}** ${(giveaway.messageamount > 1) ? `messages` : `message`} to this server.` : ''}`
 						)
