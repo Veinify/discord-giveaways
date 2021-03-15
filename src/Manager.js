@@ -248,6 +248,24 @@ class GiveawaysManager extends EventEmitter {
 			giveaway.ValidEntry().then(resolve).catch(reject);
 		});
 	}
+	winningChance(messageID) {
+		return new Promise(async (resolve, reject) => {
+			const giveaway = this.giveaways.find((g) => g.messageID === messageID);
+			if (!giveaway) {
+				return reject('No giveaway found with ID ' + messageID + '.');
+			}
+			giveaway.winningChance().then(resolve).catch(reject);
+		});
+	}
+	timeRemaining(messageID) {
+		return new Promise(async (resolve, reject) => {
+			const giveaway = this.giveaways.find((g) => g.messageID === messageID);
+			if (!giveaway) {
+				return reject('No giveaway found with ID ' + messageID + '.');
+			}
+			giveaway.content().then(resolve).catch(reject);
+		});
+	}
 
 	/**
 	 * Choose new winner(s) for the giveaway
