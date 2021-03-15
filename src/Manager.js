@@ -263,7 +263,7 @@ class GiveawaysManager extends EventEmitter {
 			if (!giveaway) {
 				return reject('No giveaway found with ID ' + messageID + '.');
 			}
-			giveaway.content().then(resolve).catch(reject);
+			resolve(giveaway.content)
 		});
 	}
 
